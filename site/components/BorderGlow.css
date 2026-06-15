@@ -1,0 +1,53 @@
+.border-glow-card {
+  position: relative;
+  border-radius: var(--border-radius, 28px);
+  background: var(--card-bg, #120f17);
+  padding: var(--glow-padding, 0px);
+}
+
+.edge-light {
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from calc(var(--cursor-angle, 0deg) - calc(var(--cone-spread, 25) * 1deg)) at 50% 50%,
+    transparent 0deg,
+    var(--glow-color, rgba(255, 255, 255, 0.8)) calc(var(--cone-spread, 25) * 2deg),
+    transparent calc(var(--cone-spread, 25) * 2deg + 2deg),
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: min(1, calc(var(--edge-proximity, 0) / var(--edge-sensitivity, 30)));
+  transition: opacity 0.1s ease;
+  z-index: 1;
+}
+
+/* Outer ambient glow layer */
+.edge-light::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.border-glow-inner {
+  position: relative;
+  z-index: 2;
+  border-radius: calc(var(--border-radius, 28px) - 1px);
+  overflow: hidden;
+}
+
+/* Sweep animation state */
+.sweep-active .edge-light {
+  transition: none;
+}

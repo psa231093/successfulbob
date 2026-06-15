@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/pablo/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/e6471065-57b3-4c1c-8da0-97e9c37aa599/ed9e8931-e2e9-45cc-9579-9a0c5ad09389/skills/docx/**)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Successfulbob Website\\\\Successfulbob Website\\\\successfulbob_website_strategy_build_guidelines.docx\" \"C:\\\\Users\\\\pablo\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\e6471065-57b3-4c1c-8da0-97e9c37aa599\\\\ed9e8931-e2e9-45cc-9579-9a0c5ad09389\\\\skills\\\\docx\\\\unpacked_docx\")",
+      "Bash(py --version)",
+      "Bash(npm --version)",
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "Bash(python -c ' *)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); node --version; npm --version)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "PowerShell(Start-Sleep 5; try { $r = Invoke-WebRequest http://localhost:3000 -UseBasicParsing -TimeoutSec 5; \"HTTP $\\($r.StatusCode\\)\" } catch { $_.Exception.Message })",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(Start-Sleep -Seconds 3)",
+      "Bash(Get-Content \"C:\\\\Users\\\\pablo\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-pablo-OneDrive-Desktop-succesfulbob\\\\5e2640a3-c9c7-4ce9-b7e0-d778f9cddf2d\\\\tasks\\\\bmas5y28z.output\")",
+      "Bash(Select-Object -Last 15)",
+      "Bash(ls ~/.claude/projects/ | head -20)",
+      "Bash(python3 -)",
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(taskkill /PID 12088 /F)",
+      "Bash(cp \"C:\\\\Users\\\\pablo\\\\Downloads\\\\understand-tech.json\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\public\\\\understand-tech.json\" && echo \"copied\")",
+      "PowerShell(Start-Process powershell -ArgumentList \"-NoExit\", \"-Command\", \"cd 'C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site'; npm run dev\" -WindowStyle Normal)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\" -Recurse -Include \"page.tsx\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\" -Recurse -Filter \"*.tsx\")",
+      "Bash(Select-Object FullName)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\app\" -Recurse | Where-Object {$_.Name -match \"page\\\\.tsx|route\\\\.\" -or $_.PSIsContainer} | Select-Object -ExpandProperty FullName)",
+      "PowerShell(robocopy \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\_backup\\\\site-baseline-2026-06-10\" /E /XD node_modules .next /NFL /NDL /NJH; if \\($LASTEXITCODE -le 7\\) { Write-Host \"BACKUP OK \\(robocopy code $LASTEXITCODE\\)\"; exit 0 } else { exit $LASTEXITCODE })",
+      "Read(//c/Users/pablo/Downloads/Successfulbob Website/Successfulbob Website/**)",
+      "Bash(pandoc \"successfulbob_website_strategy_build_guidelines.docx\" -t markdown)",
+      "Bash(python \"C:\\\\Users\\\\pablo\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\e6471065-57b3-4c1c-8da0-97e9c37aa599\\\\ed9e8931-e2e9-45cc-9579-9a0c5ad09389\\\\skills\\\\docx\\\\scripts\\\\office\\\\unpack.py\" \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Successfulbob Website\\\\Successfulbob Website\\\\successfulbob_website_strategy_build_guidelines.docx\" unpacked)"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+# Environment files — never commit
+**/.env
+**/.env.local
+**/.env*.local
+**/.env.development
+**/.env.production
+
+# Dependencies
+**/node_modules/
+
+# Next.js build output
+**/.next/
+
+# Sanity build output
+**/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude local session files
+.claude/settings.local.json

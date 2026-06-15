@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy: #061126;
+  --color-midnight: #0b1734;
+  --color-electric-blue: #3f6bff;
+  --color-signal-purple: #8b5cf6;
+  --color-soft-section: #f5f7fb;
+  --color-ink: #111827;
+  --color-muted: #526078;
+  --font-sans: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes icon-bounce {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  30%       { transform: translateY(-3px) rotate(-8deg); }
+  60%       { transform: translateY(1px) rotate(4deg); }
+}
+
+.fit-call-icon {
+  animation: icon-bounce 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+body {
+  background: #ffffff;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* Brand text selection */
+::selection {
+  background: rgba(63, 107, 255, 0.85);
+  color: #ffffff;
+}
+
+/* Keyboard focus: visible, on-brand ring without affecting mouse users */
+:focus-visible {
+  outline: 2px solid #3f6bff;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Respect users who prefer reduced motion: collapse CSS animations,
+   transitions, and smooth scrolling. Framer Motion is handled via
+   MotionConfig reducedMotion="user" in the app providers. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
