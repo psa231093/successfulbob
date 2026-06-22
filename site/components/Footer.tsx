@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import { useCalendarModal } from "@/components/CalendarModal";
 
 const explore = [
@@ -38,11 +39,8 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] mb-12">
           {/* Brand */}
           <div>
-            <Link
-              href="/"
-              className="inline-block text-white font-bold text-lg tracking-tight hover:opacity-80 transition-opacity mb-3"
-            >
-              Successfulbob
+            <Link href="/" className="inline-block hover:opacity-80 transition-opacity mb-3">
+              <Logo className="h-9 w-auto" />
             </Link>
             <p className="text-[13.5px] leading-[1.7] text-white/40 max-w-[260px]">
               Turning technical depth into a market story buyers, sales teams, partners, and executives can

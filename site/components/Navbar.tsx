@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "@/components/Logo";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useCalendarModal } from "@/components/CalendarModal";
@@ -46,11 +47,8 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link
-          href="/"
-          className="text-white font-bold text-lg tracking-tight hover:opacity-80 transition-opacity"
-        >
-          Successfulbob
+        <Link href="/" className="hover:opacity-80 transition-opacity flex-shrink-0">
+          <Logo className="h-9 w-auto" />
         </Link>
 
         {/* Desktop nav */}

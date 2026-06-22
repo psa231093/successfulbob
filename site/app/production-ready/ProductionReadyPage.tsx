@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import ProductionReadyCreatesVisual from "@/components/ProductionReadyCreatesVisual";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimateIn, Stagger, StaggerItem } from "@/components/AnimateIn";
 import {
@@ -173,12 +174,12 @@ const FIT_SIGNALS = [
 
 const DELIVERABLES = [
   { t: "Technical GTM Gap Map", d: "A clear view of where the current story is breaking across buyers, demos, field conversations, partner messaging, executive narrative, and event readiness." },
-  { t: "Product-to-Value Messaging Matrix", d: "A practical product messaging framework that connects features to buyer pains, proof points, business outcomes, objections, and urgency." },
+  { t: "Product-to-Value Messaging Matrix", d: "A practical framework that connects features to buyer pains, proof points, business outcomes, objections, and urgency." },
   { t: "Executive Narrative System", d: "A company-level story for executives, board members, strategic partners, and enterprise buyers. Why this matters, why now, why you." },
-  { t: "Demo & Conversation Architecture", d: "A structure for what to show, what to say, why it matters, and how to tailor the conversation by audience, without a museum tour of every feature." },
-  { t: "Partner Enablement Strategy", d: "A repeatable partner story, enablement journey, readiness criteria, and certification direction so partners can understand, trust, and carry the message." },
+  { t: "Production Ready Roadmap", d: "A prioritized path for adoption, enablement rollout, field testing, feedback loops, and ownership transfer." },
+  { t: "Demo & Conversation Architecture", d: "A structure for what to show, what to say, why it matters, and how to tailor the conversation by audience without a museum tour of every feature." },
+  { t: "Partner Enablement Strategy", d: "A repeatable partner story, enablement journey, readiness criteria, and direction so partners can understand, trust, and carry the message." },
   { t: "Event & Speaking Readiness", d: "Messaging and conversation guidance for webinars, conferences, field events, executive briefings, and customer meetings where the story has to work quickly." },
-  { t: "Production Ready Roadmap", d: "A prioritized plan for internal adoption, enablement rollout, field testing, feedback loops, and ownership transfer." },
 ];
 
 const PRICING = [
@@ -226,19 +227,6 @@ const ASSESSMENT_IS_NOT = [
   "A substitute for Foundation or Transformation",
 ];
 
-const NOT_INCLUDED = [
-  "Unlimited deck writing",
-  "Blog writing",
-  "Social campaigns",
-  "Graphic design",
-  "Video editing",
-  "Full LMS or course production",
-  "Partner portal administration",
-  "Sales quota ownership",
-  "SDR work",
-  "Media buying",
-  "Event logistics",
-];
 
 const OUTCOMES = [
   { t: "Market clarity", d: "We can explain what we do, why it matters, who cares, and why buyers should act now." },
@@ -347,7 +335,7 @@ export default function ProductionReadyPage() {
                 transition={{ duration: 0.65, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="text-[14px] md:text-[15px] text-white/45 max-w-xl md:max-w-none mx-auto leading-[1.7] mb-9"
               >
-                Production Ready turns product depth into a repeatable market story the whole company can understand, sell, demo, and carry. Not less technical, just easier for the right people to follow, trust, and repeat.
+                Production Ready turns product depth into a repeatable market story the whole company can understand, sell, demo, and carry.
               </motion.p>
 
               <motion.div
@@ -368,7 +356,7 @@ export default function ProductionReadyPage() {
                 transition={{ duration: 0.6, delay: 0.55 }}
                 className="mt-6 text-[13px] text-white/35 max-w-md mx-auto md:mx-0"
               >
-                The Production Ready Assessment is a $20k diagnostic that helps determine whether Foundation, Transformation, or a lighter path is the right next step.
+                The Production Ready Assessment is a $20k diagnostic that helps determine whether Assessment, Foundation, Transformation, Advisory, or a lighter path is the right next step.
               </motion.p>
             </div>
 
@@ -394,16 +382,9 @@ export default function ProductionReadyPage() {
             <h2 className="text-3xl md:text-[42px] font-bold text-[#111827] mb-7 leading-[1.15] tracking-[-0.01em]">
               Production ready should not stop at the product.
             </h2>
-            <div className="space-y-4 text-[#526078] text-base md:text-[17px] leading-[1.8] mb-8">
-              <p>Software teams do not move code into production just because it worked once. They test it. They harden it. They document it. They make sure it can be supported, repeated, measured, and trusted in the real world.</p>
-              <p>Your go to market story deserves the same standard. If the answer to these questions is "not consistently," the company probably does not have a product problem. It has a translation and repeatability problem.</p>
-            </div>
-            <div className="relative pl-6 py-4">
-              <div className="absolute left-0 top-0 w-[3px] h-full rounded-full" style={{ background: "linear-gradient(to bottom, #3f6bff, #8b5cf6)" }} />
-              <div className="absolute inset-0 rounded-r-lg" style={{ background: "linear-gradient(to right, rgba(63,107,255,0.04), transparent)" }} />
-              <p className="relative text-[16px] font-semibold text-[#111827] italic leading-relaxed">
-                That is exactly what Production Ready is built to fix.
-              </p>
+            <div className="space-y-4 text-[#526078] text-base md:text-[17px] leading-[1.8]">
+              <p>Software teams do not move code into production just because it worked once. They test it, harden it, document it, and make sure it can be supported, repeated, measured, and trusted in the real world.</p>
+              <p>Your go to market story deserves the same standard. If someone besides the founder cannot explain the value clearly, the company probably does not have a product problem. It has a translation and repeatability problem.</p>
             </div>
           </AnimateIn>
 
@@ -432,17 +413,17 @@ export default function ProductionReadyPage() {
       </section>
 
       {/* -- WHO IT'S FOR (02) -- */}
-      <section className="relative py-24 md:py-32 bg-[#f5f7fb] overflow-hidden">
-        <Numeral n="02" />
+      <section className="relative py-24 md:py-32 bg-[#0b1433] overflow-hidden">
+        <Numeral n="02" dark />
         <div className="relative max-w-6xl mx-auto px-6">
           <AnimateIn className="max-w-3xl mb-14">
             <SectionLabel>Who Production Ready is for</SectionLabel>
             <AccentBar />
-            <h2 className="text-3xl md:text-[42px] font-bold text-[#111827] mb-5 leading-[1.15] tracking-[-0.01em]">
+            <h2 className="text-3xl md:text-[42px] font-bold text-white mb-5 leading-[1.15] tracking-[-0.01em]">
               Built for technical startups whose product is ahead of their market story.
             </h2>
-            <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">
-              You have built something real, but the market is not yet understanding it quickly enough. You may be a fit if any of these sound familiar.
+            <p className="text-white/60 text-base md:text-[17px] leading-[1.8]">
+              You have built something real, but the market is not yet understanding it quickly enough. Production Ready may be a fit if these sound familiar.
             </p>
           </AnimateIn>
 
@@ -452,69 +433,32 @@ export default function ProductionReadyPage() {
                 <motion.div
                   whileHover={{ y: -3 }}
                   transition={{ duration: 0.2 }}
-                  className="group h-full flex items-start gap-4 rounded-2xl p-5 bg-white border border-[#e5e7eb] transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]"
+                  className="group h-full flex items-start gap-4 rounded-2xl p-5 bg-[#0d1a42] border border-white/10 transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.15)]"
                 >
                   <span className="text-[13px] font-bold bg-clip-text text-transparent mt-0.5 flex-shrink-0 w-7"
                     style={{ backgroundImage: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[#526078] text-[15px] leading-[1.65]">{s}</span>
+                  <span className="text-white/65 text-[15px] leading-[1.65]">{s}</span>
                 </motion.div>
               </StaggerItem>
             ))}
           </Stagger>
 
           <AnimateIn delay={0.1}>
-            <div className="rounded-2xl p-6 md:p-7 border border-dashed border-[#9ca3af]/40 bg-white/60">
-              <p className="text-[12px] font-semibold tracking-[0.1em] uppercase text-[#9ca3af] mb-2">Probably too early</p>
-              <p className="text-[14px] md:text-[15px] text-[#526078] leading-[1.7]">
-                You're likely too early for the full Production Ready path if the product is not commercially validated, there are no real customer signals yet, or the market opportunity cannot justify the investment. That doesn't mean there's no way to help, the first step should probably be advisory, a smaller review, or free resources first.
+            <div className="rounded-2xl p-6 md:p-7 border border-dashed border-white/20 bg-white/[0.03]">
+              <p className="text-[12px] font-semibold tracking-[0.1em] uppercase text-white/30 mb-2">Probably too early</p>
+              <p className="text-[14px] md:text-[15px] text-white/50 leading-[1.7]">
+                You are probably too early for the full Production Ready path if the product is not commercially validated, there are no real customer signals yet, or the market opportunity cannot justify the investment. That does not mean there is no way to help. The first step may be Advisory, a smaller review, or free resources first.
               </p>
             </div>
           </AnimateIn>
         </div>
       </section>
 
-      {/* -- THE PROBLEM IT SOLVES (03) -- */}
+      {/* -- WHAT IT CREATES (03) -- */}
       <section className="relative py-24 md:py-32 bg-white overflow-hidden">
         <Numeral n="03" />
-        <div className="relative max-w-3xl mx-auto px-6">
-          <AnimateIn>
-            <SectionLabel>The problem Production Ready solves</SectionLabel>
-            <AccentBar />
-            <h2 className="text-3xl md:text-[42px] font-bold text-[#111827] mb-10 leading-[1.15] tracking-[-0.01em]">
-              The founder can explain it. The company needs to be able to.
-            </h2>
-          </AnimateIn>
-
-          <Stagger className="space-y-5" stagger={0.1} delay={0.1}>
-            {[
-              "A founder often sells the first version of the story through force of context. They know why the product exists, the original pain, the technical tradeoffs, which parts matter and which parts are just impressive.",
-              "The problem is that the market does not have that context.",
-              "A buyer is listening for their own pain. A CFO is listening for cost and risk. A CISO is listening for exposure. A CTO is listening for technical truth and operational impact. A partner is listening for whether they can explain this without sounding foolish in front of their customer.",
-              "Every one of those audiences is spending attention to understand you. Production Ready helps make sure you are spending that attention on the things they actually care about.",
-            ].map((p, i) => (
-              <StaggerItem key={i}>
-                <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">{p}</p>
-              </StaggerItem>
-            ))}
-          </Stagger>
-
-          <AnimateIn delay={0.4} className="mt-10">
-            <div className="relative pl-6 py-4">
-              <div className="absolute left-0 top-0 w-[3px] h-full rounded-full" style={{ background: "linear-gradient(to bottom, #3f6bff, #8b5cf6)" }} />
-              <div className="absolute inset-0 rounded-r-lg" style={{ background: "linear-gradient(to right, rgba(63,107,255,0.04), transparent)" }} />
-              <p className="relative text-[18px] font-semibold text-[#111827] italic leading-relaxed">
-                If the story only works when the founder explains it, the story is not ready to scale.
-              </p>
-            </div>
-          </AnimateIn>
-        </div>
-      </section>
-
-      {/* -- WHAT IT CREATES (04) -- */}
-      <section className="relative py-24 md:py-32 bg-[#f5f7fb] overflow-hidden">
-        <Numeral n="04" />
         <div className="relative max-w-6xl mx-auto px-6">
           <AnimateIn className="max-w-3xl mb-14">
             <SectionLabel>What Production Ready creates</SectionLabel>
@@ -523,18 +467,19 @@ export default function ProductionReadyPage() {
               The system behind the story.
             </h2>
             <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">
-              Not just a cleaner tagline. Not just a nicer deck. The goal is the pieces your team needs to explain, sell, demo, and improve the story without depending on one person to translate it every time.
+              Production Ready creates the pieces your team needs to explain, sell, demo, and improve the story without depending on one person to translate it every time.
             </p>
           </AnimateIn>
 
-          <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" stagger={0.07}>
-            {DELIVERABLES.map((d, i) => (
-              <StaggerItem key={i} className="h-full">
-                <motion.div
-                  whileHover={{ y: -3 }}
-                  transition={{ duration: 0.2 }}
-                  className="group h-full rounded-2xl p-6 bg-white border border-[#e5e7eb] transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]"
-                >
+          <AnimateIn delay={0.1} className="mb-8">
+            <ProductionReadyCreatesVisual />
+          </AnimateIn>
+
+          <div className="grid sm:grid-cols-2 gap-4 mb-4">
+            {DELIVERABLES.slice(0, 2).map((d, i) => (
+              <AnimateIn key={i} delay={0.05 * i} className="h-full">
+                <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}
+                  className="group h-full rounded-2xl p-6 bg-white border border-[#e5e7eb] shadow-sm transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4"
                     style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
                     <span className="text-[13px] font-bold bg-clip-text text-transparent"
@@ -545,32 +490,68 @@ export default function ProductionReadyPage() {
                   <h3 className="text-[16px] font-semibold text-[#111827] mb-2 leading-snug group-hover:text-[#3f6bff] transition-colors duration-200">{d.t}</h3>
                   <p className="text-[#526078] text-[14px] leading-[1.65]">{d.d}</p>
                 </motion.div>
-              </StaggerItem>
+              </AnimateIn>
             ))}
-          </Stagger>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4 mb-4">
+            {DELIVERABLES.slice(2, 5).map((d, i) => (
+              <AnimateIn key={i} delay={0.05 * i} className="h-full">
+                <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}
+                  className="group h-full rounded-2xl p-6 bg-white border border-[#e5e7eb] shadow-sm transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
+                    <span className="text-[13px] font-bold bg-clip-text text-transparent"
+                      style={{ backgroundImage: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}>
+                      {String(i + 3).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3 className="text-[16px] font-semibold text-[#111827] mb-2 leading-snug group-hover:text-[#3f6bff] transition-colors duration-200">{d.t}</h3>
+                  <p className="text-[#526078] text-[14px] leading-[1.65]">{d.d}</p>
+                </motion.div>
+              </AnimateIn>
+            ))}
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {DELIVERABLES.slice(5, 7).map((d, i) => (
+              <AnimateIn key={i} delay={0.05 * i} className="h-full">
+                <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}
+                  className="group h-full rounded-2xl p-6 bg-white border border-[#e5e7eb] shadow-sm transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
+                    <span className="text-[13px] font-bold bg-clip-text text-transparent"
+                      style={{ backgroundImage: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}>
+                      {String(i + 6).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3 className="text-[16px] font-semibold text-[#111827] mb-2 leading-snug group-hover:text-[#3f6bff] transition-colors duration-200">{d.t}</h3>
+                  <p className="text-[#526078] text-[14px] leading-[1.65]">{d.d}</p>
+                </motion.div>
+              </AnimateIn>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* -- ENGAGEMENT PATHS (pricing) -- */}
-      <section className="relative py-24 md:py-32 bg-white overflow-hidden">
+      <section className="relative py-24 md:py-32 bg-[#0b1433] overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6">
           <AnimateIn className="max-w-3xl mb-6 md:text-center md:mx-auto">
             <div className="md:flex md:flex-col md:items-center">
               <SectionLabel>Engagement paths</SectionLabel>
               <AccentBar className="md:mx-auto" />
-              <h2 className="text-3xl md:text-[42px] font-bold text-[#111827] mb-5 leading-[1.15] tracking-[-0.01em]">
+              <h2 className="text-3xl md:text-[42px] font-bold text-white mb-5 leading-[1.15] tracking-[-0.01em]">
                 Three objective-based ways to engage.
               </h2>
-              <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">
+              <p className="text-white/60 text-base md:text-[17px] leading-[1.8]">
                 Production Ready is not sold as open-ended access to time. The work is tied to objective deliverables, readiness milestones, and the level of transfer your team needs.
               </p>
             </div>
           </AnimateIn>
 
           <AnimateIn delay={0.1} className="max-w-3xl mx-auto mb-12">
-            <div className="rounded-2xl px-6 py-5 bg-[#f5f7fb] border border-[#e5e7eb]">
-              <p className="text-[14px] md:text-[15px] text-[#526078] leading-[1.7]">
-                <span className="font-semibold text-[#111827]">Evaluate the price against the value of the problem.</span> One clearer enterprise opportunity, one better-converting event, one activated strategic partner, one stronger funding narrative, or one sales team that can explain the product without the founder in every room can easily change the math. If the product is strong and the market is real, unclear GTM is expensive.
+            <div className="rounded-2xl px-6 py-5 bg-[#0d1a42] border border-white/10">
+              <p className="text-[14px] md:text-[15px] text-white/55 leading-[1.7]">
+                <span className="font-semibold text-white/85">Evaluate the price against the value of the problem.</span> One clearer enterprise opportunity, one better-converting event, one activated strategic partner, one stronger funding narrative, or one sales team that can explain the product without the founder in every room can easily change the math. If the product is strong and the market is real, unclear GTM is expensive.
               </p>
             </div>
           </AnimateIn>
@@ -644,7 +625,7 @@ export default function ProductionReadyPage() {
                 When the problem is real, but the path is not obvious.
               </h2>
               <p className="text-[#526078] text-base md:text-[17px] leading-[1.8] mb-6">
-                The Assessment is designed to answer a practical question: is this a technical GTM problem worth prioritizing right now? It looks at the current state of the story, demo, buyer value, partner readiness, executive narrative, and field repeatability to identify:
+                The Assessment answers a practical question: is this a technical GTM problem worth prioritizing right now? It reviews the current story, demo, buyer value, partner readiness, executive narrative, and field repeatability to identify the right next step.
               </p>
               <Stagger className="space-y-3" stagger={0.06}>
                 {[
@@ -708,48 +689,86 @@ export default function ProductionReadyPage() {
         </div>
       </section>
 
-      {/* -- WHAT IT'S NOT (06) -- dark -- */}
-      <section className="relative py-24 md:py-32 bg-[#061126] text-white overflow-hidden">
+      {/* -- WHAT IT'S NOT (06) -- */}
+      <section className="relative py-24 md:py-32 bg-[#0b1433] overflow-hidden">
         <Numeral n="06" dark />
-        <div className="absolute -right-20 top-1/3 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.10) 0%, transparent 70%)" }} />
-
-        <div className="relative max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-14 md:gap-16 items-center">
-          <AnimateIn>
+        <div className="relative max-w-6xl mx-auto px-6">
+          <AnimateIn className="max-w-3xl mb-12">
             <SectionLabel>What Production Ready is not</SectionLabel>
             <AccentBar />
-            <h2 className="text-3xl md:text-[42px] font-bold mb-7 leading-[1.15] tracking-[-0.01em]">
+            <h2 className="text-3xl md:text-[42px] font-bold text-white mb-5 leading-[1.15] tracking-[-0.01em]">
               Production Ready is not a content factory.
             </h2>
-            <div className="space-y-4 text-white/60 text-base md:text-[17px] leading-[1.8]">
-              <p>It provides the strategy, structure, story, standards, training, and field review needed to make technical GTM more repeatable. It is not meant to replace your internal team, agency, or production resources.</p>
-              <p>That is intentional. The goal is to build the system your team can use, not create another dependency.</p>
-            </div>
           </AnimateIn>
 
-          <AnimateIn delay={0.15}>
-            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8"
-              style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.07)" }}>
-              <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-white/35 mb-6">Production Ready does not include</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3.5">
-                {NOT_INCLUDED.map((item) => (
-                  <div key={item} className="flex items-center gap-3">
-                    <span className="w-5 h-5 rounded-full border border-white/15 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-2.5 h-2.5 text-white/35" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </span>
-                    <span className="text-white/55 text-[13.5px] leading-snug">{item}</span>
-                  </div>
-                ))}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <AnimateIn>
+              <div className="rounded-2xl p-7 border border-white/10 bg-[#0d1a42] h-full">
+                <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#3f6bff] mb-5">Production Ready is</p>
+                <div className="space-y-3">
+                  {[
+                    "GTM system design",
+                    "Product-to-value translation",
+                    "Messaging architecture",
+                    "Demo and conversation structure",
+                    "Partner repeatability",
+                    "Executive narrative",
+                    "Event and field readiness",
+                    "Internal transfer so the team can carry the story",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <span className="mt-0.5 w-5 h-5 rounded-full border border-[#3f6bff]/40 bg-[#3f6bff]/10 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-2.5 h-2.5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      <span className="text-white/65 text-[14px] leading-snug">{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </AnimateIn>
+
+            <AnimateIn delay={0.1}>
+              <div className="rounded-2xl p-7 border border-white/10 bg-[#0d1a42] h-full">
+                <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-white/30 mb-5">Production Ready is not</p>
+                <div className="space-y-3">
+                  {[
+                    "Unlimited deck writing",
+                    "Blog writing",
+                    "Social campaigns",
+                    "Graphic design",
+                    "Video editing",
+                    "SDR work",
+                    "Sales quota ownership",
+                    "Media buying",
+                    "Event logistics",
+                    "Partner portal administration",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3">
+                      <span className="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-2.5 h-2.5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </span>
+                      <span className="text-white/50 text-[14px] leading-snug">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </AnimateIn>
+          </div>
+
+          <AnimateIn delay={0.2}>
+            <p className="text-[15px] text-white/50 leading-[1.7]">
+              The goal is to build the system your team can use, not create another dependency.
+            </p>
           </AnimateIn>
         </div>
       </section>
 
       {/* -- EXPECTED OUTCOMES (07) -- */}
-      <section className="relative py-24 md:py-32 bg-white overflow-hidden">
+      <section className="relative py-24 md:py-32 bg-[#f5f7fb] overflow-hidden">
         <Numeral n="07" />
         <div className="relative max-w-6xl mx-auto px-6">
           <AnimateIn className="max-w-3xl mb-14">
@@ -763,14 +782,11 @@ export default function ProductionReadyPage() {
             </p>
           </AnimateIn>
 
-          <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" stagger={0.08}>
-            {OUTCOMES.map((o, i) => (
-              <StaggerItem key={i} className="h-full">
-                <motion.div
-                  whileHover={{ y: -3 }}
-                  transition={{ duration: 0.2 }}
-                  className="group h-full rounded-2xl p-7 border border-[#e5e7eb] bg-white transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]"
-                >
+          <div className="grid sm:grid-cols-2 gap-4 mb-4">
+            {OUTCOMES.slice(0, 2).map((o, i) => (
+              <AnimateIn key={i} delay={0.05 * i} className="h-full">
+                <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}
+                  className="group h-full rounded-2xl p-7 border border-[#e5e7eb] bg-white shadow-sm transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
                     style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
                     <svg className="w-5 h-5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -780,19 +796,36 @@ export default function ProductionReadyPage() {
                   <h3 className="text-[17px] font-bold text-[#111827] mb-2">{o.t}</h3>
                   <p className="text-[#526078] text-[14px] leading-[1.65]">"{o.d}"</p>
                 </motion.div>
-              </StaggerItem>
+              </AnimateIn>
             ))}
-          </Stagger>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {OUTCOMES.slice(2, 5).map((o, i) => (
+              <AnimateIn key={i} delay={0.05 * i} className="h-full">
+                <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}
+                  className="group h-full rounded-2xl p-7 border border-[#e5e7eb] bg-white shadow-sm transition-shadow duration-200 hover:shadow-[0_12px_30px_rgba(63,107,255,0.10)]">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
+                    <svg className="w-5 h-5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-[17px] font-bold text-[#111827] mb-2">{o.t}</h3>
+                  <p className="text-[#526078] text-[14px] leading-[1.65]">"{o.d}"</p>
+                </motion.div>
+              </AnimateIn>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* -- FAQ -- */}
-      <section className="py-24 md:py-32 bg-[#f5f7fb]">
+      <section className="py-24 md:py-32 bg-[#0b1433]">
         <div className="max-w-3xl mx-auto px-6">
           <AnimateIn>
             <SectionLabel>Production Ready questions</SectionLabel>
             <AccentBar />
-            <h2 className="text-3xl md:text-[40px] font-bold text-[#111827] mb-14 leading-[1.15]">
+            <h2 className="text-3xl md:text-[40px] font-bold text-white mb-14 leading-[1.15]">
               Questions teams usually ask
             </h2>
           </AnimateIn>
@@ -800,13 +833,13 @@ export default function ProductionReadyPage() {
           <Stagger stagger={0.07}>
             {PR_FAQS.map((faq, i) => (
               <StaggerItem key={i}>
-                <div className="border-b border-[#e5e7eb] last:border-b-0">
+                <div className="border-b border-white/10 last:border-b-0">
                   <button
                     className="flex items-start justify-between w-full text-left gap-4 py-6 group"
                     aria-expanded={openFaq === i}
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   >
-                    <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${openFaq === i ? "text-[#3f6bff]" : "text-[#111827] group-hover:text-[#3f6bff]"}`}>
+                    <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${openFaq === i ? "text-[#3f6bff]" : "text-white group-hover:text-[#3f6bff]"}`}>
                       {faq.q}
                     </span>
                     <motion.span
@@ -814,7 +847,7 @@ export default function ProductionReadyPage() {
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="flex-shrink-0 mt-0.5"
                     >
-                      <svg className={`w-5 h-5 transition-colors duration-200 ${openFaq === i ? "text-[#3f6bff]" : "text-[#9ca3af]"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className={`w-5 h-5 transition-colors duration-200 ${openFaq === i ? "text-[#3f6bff]" : "text-white/30"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </motion.span>
@@ -828,7 +861,7 @@ export default function ProductionReadyPage() {
                         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-6 text-[#526078] text-[15px] leading-[1.8]">{faq.a}</p>
+                        <p className="pb-6 text-white/60 text-[15px] leading-[1.8]">{faq.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

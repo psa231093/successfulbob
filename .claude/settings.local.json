@@ -35,7 +35,25 @@
       "PowerShell(robocopy \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\_backup\\\\site-baseline-2026-06-10\" /E /XD node_modules .next /NFL /NDL /NJH; if \\($LASTEXITCODE -le 7\\) { Write-Host \"BACKUP OK \\(robocopy code $LASTEXITCODE\\)\"; exit 0 } else { exit $LASTEXITCODE })",
       "Read(//c/Users/pablo/Downloads/Successfulbob Website/Successfulbob Website/**)",
       "Bash(pandoc \"successfulbob_website_strategy_build_guidelines.docx\" -t markdown)",
-      "Bash(python \"C:\\\\Users\\\\pablo\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\e6471065-57b3-4c1c-8da0-97e9c37aa599\\\\ed9e8931-e2e9-45cc-9579-9a0c5ad09389\\\\skills\\\\docx\\\\scripts\\\\office\\\\unpack.py\" \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Successfulbob Website\\\\Successfulbob Website\\\\successfulbob_website_strategy_build_guidelines.docx\" unpacked)"
+      "Bash(python \"C:\\\\Users\\\\pablo\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\e6471065-57b3-4c1c-8da0-97e9c37aa599\\\\ed9e8931-e2e9-45cc-9579-9a0c5ad09389\\\\skills\\\\docx\\\\scripts\\\\office\\\\unpack.py\" \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Successfulbob Website\\\\Successfulbob Website\\\\successfulbob_website_strategy_build_guidelines.docx\" unpacked)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\Successfulbob Website Revision Punch List.docx\" \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\unpacked\")",
+      "Bash(pip install *)",
+      "Bash(out-file -encoding utf8 \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\doc_text.txt\")",
+      "Bash(Get-Content \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\doc_text.txt\" -Encoding utf8)",
+      "Bash(Get-ChildItem -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(ConvertTo-Json)",
+      "Bash(ConvertFrom-Json)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Select-Object -First 100)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\logo.png\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\public\\\\logo.png\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\translation gap.png\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\public\\\\translation-gap.png\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\challenges.png\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\public\\\\challenges.png\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\Production Ready Creates.png\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\public\\\\production-ready-creates.png\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\pablo\\\\Downloads\\\\Revisions\\\\Revisions\\\\translating.png\" \"C:\\\\Users\\\\pablo\\\\OneDrive\\\\Desktop\\\\succesfulbob\\\\site\\\\public\\\\translating.png\")"
     ]
   }
 }

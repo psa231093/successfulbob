@@ -344,6 +344,70 @@ export default function ContactPage() {
           style={{ background: "linear-gradient(to bottom, transparent, #061126)" }} />
       </section>
 
+      {/* -- TWO WAYS TO REACH ME + FORM -- */}
+      <section className="relative py-24 md:py-32 bg-[#f5f7fb] overflow-hidden">
+        <div className="relative max-w-6xl mx-auto px-6">
+          <AnimateIn className="max-w-3xl mb-12">
+            <SectionLabel>Get in touch</SectionLabel>
+            <AccentBar />
+            <h2 className="text-3xl md:text-[42px] font-bold text-[#111827] mb-5 leading-[1.15] tracking-[-0.01em]">
+              Two easy ways to reach me.
+            </h2>
+            <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">
+              Schedule a call to talk through next steps, or send a short note and I'll respond as soon as I can.
+            </p>
+          </AnimateIn>
+
+          {/* Two option cards */}
+          <Stagger className="grid sm:grid-cols-2 gap-5 mb-10" stagger={0.08}>
+            <StaggerItem className="h-full">
+              <div className="h-full rounded-2xl p-7 bg-white border border-[#e5e7eb] flex flex-col">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
+                  style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
+                  <svg className="w-5 h-5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <rect x="3" y="4" width="18" height="18" rx="3" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                </div>
+                <h3 className="text-[18px] font-bold text-[#111827] mb-2">Schedule a 30-Minute Fit Call</h3>
+                <p className="text-[#526078] text-[14px] leading-[1.65] mb-6">Best if you want to talk through whether Production Ready, Advisory Work, or another next step makes sense.</p>
+                <div className="mt-auto">
+                  <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); openModal(); }}
+                    className="inline-flex items-center gap-2 rounded-xl border-2 border-[#3f6bff] text-[#3f6bff] font-semibold text-[14px] px-5 py-2.5 hover:bg-[#3f6bff] hover:text-white transition-colors cursor-pointer"
+                  >
+                    Pick a Time
+                  </a>
+                </div>
+              </div>
+            </StaggerItem>
+            <StaggerItem className="h-full">
+              <div className="h-full rounded-2xl p-7 bg-white border border-[#e5e7eb] flex flex-col">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
+                  style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
+                  <svg className="w-5 h-5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <rect x="3" y="5" width="18" height="14" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M3 7l9 6 9-6" />
+                  </svg>
+                </div>
+                <h3 className="text-[18px] font-bold text-[#111827] mb-2">Email Bob Directly</h3>
+                <p className="text-[#526078] text-[14px] leading-[1.65] mb-1">Best if you want to send context first, ask a specific question, or reach out about speaking and interviews.</p>
+                <p className="text-[#3f6bff] text-[14px] font-semibold mb-6">bob@successfulbob.com</p>
+                <div className="mt-auto"><OutlineButton href="mailto:bob@successfulbob.com" external>Email Bob Directly</OutlineButton></div>
+              </div>
+            </StaggerItem>
+          </Stagger>
+
+          {/* Form */}
+          <AnimateIn delay={0.1} className="max-w-3xl mx-auto">
+            <div className="text-center mb-6">
+              <h3 className="text-[22px] md:text-[26px] font-bold text-[#111827] mb-2">Send a note</h3>
+              <p className="text-[#526078] text-[15px]">Prefer a form? Send a short note and I'll respond as soon as I can.</p>
+            </div>
+            <ContactForm />
+          </AnimateIn>
+        </div>
+      </section>
+
       {/* -- WHAT ARE YOU REACHING OUT ABOUT (paths) -- */}
       <section className="relative py-24 md:py-32 bg-white overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6">
@@ -454,88 +518,6 @@ export default function ContactPage() {
               </div>
             </AnimateIn>
           </div>
-        </div>
-      </section>
-
-      {/* -- TWO WAYS TO REACH ME + FORM -- */}
-      <section className="relative py-24 md:py-32 bg-[#f5f7fb] overflow-hidden">
-        <div className="relative max-w-6xl mx-auto px-6">
-          <AnimateIn className="max-w-3xl mb-12">
-            <SectionLabel>Get in touch</SectionLabel>
-            <AccentBar />
-            <h2 className="text-3xl md:text-[42px] font-bold text-[#111827] mb-5 leading-[1.15] tracking-[-0.01em]">
-              Two easy ways to reach me.
-            </h2>
-            <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">
-              Schedule a call to talk through next steps, or send a short note and I'll respond as soon as I can.
-            </p>
-          </AnimateIn>
-
-          {/* Two option cards */}
-          <Stagger className="grid sm:grid-cols-2 gap-5 mb-10" stagger={0.08}>
-            <StaggerItem className="h-full">
-              <div className="h-full rounded-2xl p-7 bg-white border border-[#e5e7eb] flex flex-col">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
-                  <svg className="w-5 h-5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <rect x="3" y="4" width="18" height="18" rx="3" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                </div>
-                <h3 className="text-[18px] font-bold text-[#111827] mb-2">Schedule a 30-Minute Fit Call</h3>
-                <p className="text-[#526078] text-[14px] leading-[1.65] mb-6">Best if you want to talk through whether Production Ready, Advisory Work, or another next step makes sense.</p>
-                <div className="mt-auto">
-                  <a
-                    href="#schedule"
-                    onClick={(e) => { e.preventDefault(); document.getElementById("schedule")?.scrollIntoView({ behavior: "smooth" }); }}
-                    className="inline-flex items-center gap-2 rounded-xl border-2 border-[#3f6bff] text-[#3f6bff] font-semibold text-[14px] px-5 py-2.5 hover:bg-[#3f6bff] hover:text-white transition-colors cursor-pointer"
-                  >
-                    Pick a Time
-                  </a>
-                </div>
-              </div>
-            </StaggerItem>
-            <StaggerItem className="h-full">
-              <div className="h-full rounded-2xl p-7 bg-white border border-[#e5e7eb] flex flex-col">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: "linear-gradient(135deg, rgba(63,107,255,0.12), rgba(139,92,246,0.12))" }}>
-                  <svg className="w-5 h-5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <rect x="3" y="5" width="18" height="14" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M3 7l9 6 9-6" />
-                  </svg>
-                </div>
-                <h3 className="text-[18px] font-bold text-[#111827] mb-2">Email Bob Directly</h3>
-                <p className="text-[#526078] text-[14px] leading-[1.65] mb-1">Best if you want to send context first, ask a specific question, or reach out about speaking and interviews.</p>
-                <p className="text-[#3f6bff] text-[14px] font-semibold mb-6">bob@successfulbob.com</p>
-                <div className="mt-auto"><OutlineButton href="mailto:bob@successfulbob.com" external>Email Bob Directly</OutlineButton></div>
-              </div>
-            </StaggerItem>
-          </Stagger>
-
-          {/* Inline Google Calendar booking */}
-          <AnimateIn delay={0.05} className="mb-10">
-            <div id="schedule" className="rounded-2xl bg-white border border-[#e5e7eb] overflow-hidden">
-              <div className="px-7 pt-7 pb-4">
-                <h3 className="text-[20px] font-bold text-[#111827] mb-1">Pick a time that works for you</h3>
-                <p className="text-[#526078] text-[14px]">Choose a 30-minute slot and book directly — no back and forth.</p>
-              </div>
-              <iframe
-                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0rJQvLQcHqKx_hZvjK54xyc7TQU6QFgOwSwrik-B2v-gvT42I0Q7AVPzKDaCWQBt6zunZGP9gT?gv=true"
-                style={{ border: 0 }}
-                width="100%"
-                height="600"
-                frameBorder="0"
-                title="Schedule a 30-minute fit call with Bob Hart"
-              />
-            </div>
-          </AnimateIn>
-
-          {/* Form */}
-          <AnimateIn delay={0.1} className="max-w-3xl mx-auto">
-            <div className="text-center mb-6">
-              <h3 className="text-[22px] md:text-[26px] font-bold text-[#111827] mb-2">Send a note</h3>
-              <p className="text-[#526078] text-[15px]">Prefer a form? Send a short note and I'll respond as soon as I can.</p>
-            </div>
-            <ContactForm />
-          </AnimateIn>
         </div>
       </section>
 

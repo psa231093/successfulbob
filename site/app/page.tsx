@@ -1,18 +1,16 @@
 ﻿"use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import TranslationGapVisual from "@/components/TranslationGapVisual";
 import { motion, type Variants } from "framer-motion";
 import { AnimateIn, Stagger, StaggerItem } from "@/components/AnimateIn";
 import { useCalendarModal } from "@/components/CalendarModal";
 import FAQSection from "@/components/FAQSection";
 import ParticleCanvas from "@/components/ParticleCanvas";
-import ProblemIllustration from "@/components/ProblemIllustration";
 import WhatWeDoSection from "@/components/WhatWeDoSection";
 import WaysToWorkSection from "@/components/WaysToWorkSection";
 import AboutBobSection from "@/components/AboutBobSection";
 import WhoItsForSection from "@/components/WhoItsForSection";
-import InsightsSection from "@/components/InsightsSection";
 
 /* --- Hero word reveal ------------------------------------------ */
 
@@ -212,13 +210,10 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-3 mb-10"
+            className="mb-10"
           >
             <p className="text-[17px] md:text-[19px] text-white/65 max-w-2xl mx-auto leading-[1.7]">
-              You built something real. The problem is that too much of the market may still need you in the room to understand why it matters.
-            </p>
-            <p className="text-[15px] md:text-[17px] text-white/45 max-w-xl mx-auto leading-[1.7]">
-              Successfulbob LLC turns product depth into a story buyers, sales teams, partners, and executives can understand, trust, and repeat.
+              Successfulbob helps technical companies turn product depth into a story buyers, sales teams, partners, and executives can understand and repeat.
             </p>
           </motion.div>
 
@@ -265,9 +260,9 @@ export default function HomePage() {
               <Stagger className="space-y-5" stagger={0.1} delay={0.1}>
                 {[
                   "A lot of technical companies do not have a product problem. They have a translation problem.",
-                  "The founder understands the problem. The engineers understand what was built. The earliest customers may even understand the value because they lived the pain.",
+                  "The founder understands the product. The engineers understand what was built. The earliest customers may even understand the value because they lived the pain.",
                   "But the next buyer, seller, partner, investor, or executive does not have all that context. They are not filling in the same blanks. They are deciding whether to keep listening.",
-                  "That attention is a currency. Every feature you explain spends some of it. If the story is not connected to the pain they feel, the job they need done, or the outcome they are trying to create, they will quietly move on.",
+                  "That attention is currency. Every feature you explain spends some of it. If the story is not connected to the pain they feel, the job they need done, or the outcome they are trying to create, they will quietly move on.",
                 ].map((p, i) => (
                   <StaggerItem key={i}>
                     <p className="text-[#526078] text-base md:text-[17px] leading-[1.8]">{p}</p>
@@ -280,7 +275,7 @@ export default function HomePage() {
                   <div className="absolute -left-[3px] top-0 w-[3px] h-full bg-gradient-to-b from-[#3f6bff] to-[#8b5cf6]" />
                   <div className="absolute inset-0 bg-gradient-to-r from-[#3f6bff]/[0.04] to-transparent rounded-r-lg" />
                   <p className="relative text-[17px] font-semibold text-[#111827] italic leading-relaxed">
-                    If the story only works when the founder explains it, it is not ready to scale.
+                    If the story only works when the founder explains it, the story is not ready to scale.
                   </p>
                 </div>
               </AnimateIn>
@@ -288,7 +283,7 @@ export default function HomePage() {
 
             {/* Right: illustration */}
             <AnimateIn delay={0.2} className="hidden md:flex items-center justify-center">
-              <ProblemIllustration />
+              <TranslationGapVisual />
             </AnimateIn>
 
           </div>
@@ -298,72 +293,14 @@ export default function HomePage() {
       {/* -- WHAT WE DO ----------------------------------------- */}
       <WhatWeDoSection />
 
-      {/* -- WAYS TO WORK TOGETHER ------------------------------ */}
-      <WaysToWorkSection />
-
-      {/* -- PRODUCTION READY DARK ------------------------------ */}
-      <section className="relative py-24 md:py-32 bg-[#061126] text-white overflow-hidden">
-        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.13) 0%, transparent 70%)" }} />
-        <div className="absolute left-0 bottom-0 w-[300px] h-[300px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(63,107,255,0.08) 0%, transparent 70%)" }} />
-
-        <div className="relative max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          <AnimateIn>
-            <SectionLabel>Production Ready</SectionLabel>
-            <AccentBar />
-            <h2 className="text-3xl md:text-[42px] font-bold mb-8 leading-[1.15] tracking-[-0.01em]">
-              Your product may be production-ready.<br className="hidden md:block" /> Is your GTM?
-            </h2>
-            <div className="space-y-4 text-white/60 text-base md:text-[17px] leading-[1.8] mb-10">
-              <p>Software teams do not move code into production just because it works once. They test it, harden it, document it, and make sure it can survive real users, real workflows, and real consequences.</p>
-              <p>Your go to market story deserves the same discipline.</p>
-              <p>Production Ready is built for companies that already have evidence their product works and now need the market, field, partners, and executives to understand why it matters.</p>
-            </div>
-            <GradientButton href="/production-ready">Make GTM Production Ready</GradientButton>
-          </AnimateIn>
-
-          {/* Checklist card */}
-          <AnimateIn delay={0.2}>
-            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8"
-              style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.07)" }}>
-              <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-white/35 mb-7">
-                Questions Production Ready helps answer
-              </p>
-              <Stagger className="space-y-5" stagger={0.07} delay={0.3}>
-                {[
-                  "Can someone besides the founder explain the value?",
-                  "Can sales tell the story without turning it into a feature list?",
-                  "Can partners understand, trust, and repeat it?",
-                  "Can executives see why this matters now?",
-                  "Can the demo guide buyers toward value instead of wandering through screens?",
-                  "Can the team learn from the market and improve the story over time?",
-                ].map((q) => (
-                  <StaggerItem key={q}>
-                    <div className="flex items-start gap-4">
-                      <div className="mt-0.5 w-5 h-5 rounded-full border border-[#3f6bff]/50 bg-[#3f6bff]/10 flex items-center justify-center flex-shrink-0">
-                        <svg className="w-2.5 h-2.5 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-white/65 text-[14px] leading-relaxed">{q}</span>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </Stagger>
-            </div>
-          </AnimateIn>
-        </div>
-      </section>
-
-      {/* -- WHY BOB -------------------------------------------- */}
-      <AboutBobSection />
-
       {/* -- AUDIENCE ------------------------------------------- */}
       <WhoItsForSection />
 
-      {/* -- INSIGHTS PREVIEW ----------------------------------- */}
-      <InsightsSection />
+      {/* -- WAYS TO WORK TOGETHER ------------------------------ */}
+      <WaysToWorkSection />
+
+      {/* -- WHY BOB -------------------------------------------- */}
+      <AboutBobSection />
 
       {/* -- FAQ ------------------------------------------------ */}
       <FAQSection />
