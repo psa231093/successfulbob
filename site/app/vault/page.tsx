@@ -201,7 +201,8 @@ export default function VaultPage() {
           </Stagger>
 
           {/* Footer note */}
-          <AnimateIn delay={0.4} className="mt-14 pt-10 border-t text-center" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+          <div className="mt-14 pt-10 border-t text-center" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+          <AnimateIn delay={0.4}>
             <p className="text-white/35 text-[14px] leading-[1.7]">
               Need something not listed here, or want the latest version of a resource?{" "}
               <a
