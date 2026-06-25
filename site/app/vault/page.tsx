@@ -215,6 +215,7 @@ export default function VaultPage() {
             </p>
           </AnimateIn>
         </div>
+        </div>
       </section>
     </div>
   );
