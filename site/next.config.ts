@@ -8,7 +8,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https://cdn.sanity.io",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.sanity.io https://*.apicdn.sanity.io",
+  "connect-src 'self' https://*.sanity.io https://*.apicdn.sanity.io https://formspree.io",
   "frame-src https://calendar.google.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
