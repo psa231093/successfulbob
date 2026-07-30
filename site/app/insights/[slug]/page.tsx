@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
-import { sanityClient, urlFor } from "@/lib/sanity";
+import { sanityClient, urlFor, isSanityConfigured } from "@/lib/sanity";
 import { postBySlugQuery, allPostSlugsQuery } from "@/lib/queries";
 import { GradientButton, GhostButton, FitCallButton } from "@/components/Primitives";
 import ArticleClientShell from "./ArticleClientShell";
@@ -49,10 +49,6 @@ type Post = {
 /* -- Static params ------------------------------------------------ */
 
 export async function generateStaticParams() {
-  const isSanityConfigured =
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "your-project-id-here";
-
   if (!isSanityConfigured) return [];
 
   const slugs = await sanityClient.fetch<{ slug: string }[]>(allPostSlugsQuery);
@@ -67,10 +63,6 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-
-  const isSanityConfigured =
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "your-project-id-here";
 
   if (!isSanityConfigured) {
     return {
@@ -192,10 +184,6 @@ export default async function InsightArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
-  const isSanityConfigured =
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "your-project-id-here";
 
   if (!isSanityConfigured) {
     return <PlaceholderPage slug={slug} />;

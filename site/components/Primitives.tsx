@@ -50,12 +50,16 @@ export function GradientButton({
   return (
     <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }}
       className="w-full sm:w-auto" style={{ borderRadius: 8 }}>
-      {onClick ? (
-        <button onClick={onClick} className={cls}>{inner}</button>
-      ) : external ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+      {/* Branch on href first so a link can also carry an onClick (analytics on
+          outbound CTAs). Ordering matters: onClick-first would swallow the href. */}
+      {href ? (
+        external ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={cls}>{inner}</a>
+        ) : (
+          <Link href={href} onClick={onClick} className={cls}>{inner}</Link>
+        )
       ) : (
-        <Link href={href!} className={cls}>{inner}</Link>
+        <button type="button" onClick={onClick} className={cls}>{inner}</button>
       )}
     </motion.div>
   );
@@ -74,12 +78,14 @@ export function GhostButton({ href, children, external, onClick }: { href?: stri
   return (
     <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }}
       className="w-full sm:w-auto" style={{ borderRadius: 8 }}>
-      {onClick ? (
-        <button onClick={onClick} className={cls}>{children}</button>
-      ) : external ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
+      {href ? (
+        external ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={cls}>{children}</a>
+        ) : (
+          <Link href={href} onClick={onClick} className={cls}>{children}</Link>
+        )
       ) : (
-        <Link href={href!} className={cls}>{children}</Link>
+        <button type="button" onClick={onClick} className={cls}>{children}</button>
       )}
     </motion.div>
   );
@@ -98,12 +104,14 @@ export function OutlineButton({ href, children, external, onClick }: { href?: st
   return (
     <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }}
       className="w-full" style={{ borderRadius: 8 }}>
-      {onClick ? (
-        <button onClick={onClick} className={cls}>{children}</button>
-      ) : external ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
+      {href ? (
+        external ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={cls}>{children}</a>
+        ) : (
+          <Link href={href} onClick={onClick} className={cls}>{children}</Link>
+        )
       ) : (
-        <Link href={href!} className={cls}>{children}</Link>
+        <button type="button" onClick={onClick} className={cls}>{children}</button>
       )}
     </motion.div>
   );
@@ -116,16 +124,16 @@ export function FitCallOutlineButton({ children }: { children: React.ReactNode }
 
 /* -- Ghost outline button that hugs content on desktop (dark bg) -- */
 
-export function GhostButtonInline({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
+export function GhostButtonInline({ href, children, external, onClick }: { href: string; children: React.ReactNode; external?: boolean; onClick?: () => void }) {
   const cls =
     "flex items-center justify-center w-full sm:w-auto px-7 py-3.5 rounded-lg text-[15px] font-semibold text-white border border-white/20 hover:border-white/40 hover:bg-white/[0.06] transition-all duration-200";
   return (
     <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }}
       className="w-full sm:w-auto inline-block" style={{ borderRadius: 8 }}>
       {external ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
+        <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={cls}>{children}</a>
       ) : (
-        <Link href={href} className={cls}>{children}</Link>
+        <Link href={href} onClick={onClick} className={cls}>{children}</Link>
       )}
     </motion.div>
   );

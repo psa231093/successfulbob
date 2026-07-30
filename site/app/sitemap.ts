@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { sanityClient } from "@/lib/sanity";
+import { sanityClient, isSanityConfigured } from "@/lib/sanity";
 import { allPostSlugsQuery } from "@/lib/queries";
 
 const SITE_URL = "https://successfulbob.com";
@@ -13,10 +13,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.7 },
   ];
-
-  const isSanityConfigured =
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "your-project-id-here";
 
   if (!isSanityConfigured) return staticEntries;
 

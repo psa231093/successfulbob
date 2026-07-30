@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sanityClient } from "@/lib/sanity";
+import { sanityClient, isSanityConfigured } from "@/lib/sanity";
 import { featuredPostQuery, allPostsQuery, allCategoriesQuery } from "@/lib/queries";
 import InsightsPage, { type FeaturedPost, type InsightPost, type InsightCategory } from "./InsightsPage";
 
@@ -20,10 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default async function InsightsRoute() {
-  const isSanityConfigured =
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID !== "your-project-id-here";
-
   let featured: FeaturedPost | null = null;
   let posts: InsightPost[] = [];
   let categories: InsightCategory[] = [];
