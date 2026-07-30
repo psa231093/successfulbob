@@ -5,9 +5,10 @@ import { AnimateIn, Stagger, StaggerItem } from "@/components/AnimateIn";
 import FAQAccordion from "@/components/FAQAccordion";
 import RichText from "@/components/RichText";
 import TrackedCta from "@/components/TrackedCta";
+import VideoFacade from "@/components/VideoFacade";
 import WorkshopHero from "./WorkshopHero";
 import OverflowSection from "./OverflowSection";
-import type { Workshop, WorkshopView } from "@/lib/workshop";
+import { youTubeIdFrom, type Workshop, type WorkshopView } from "@/lib/workshop";
 
 /* Section order and backgrounds.
 
@@ -71,6 +72,9 @@ function Heading({
 
 export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; view: WorkshopView }) {
   const w = workshop;
+  // Null for a missing or unparseable URL, which removes the section entirely.
+  // "Works without the video" is a property of the structure, not a promise.
+  const videoId = youTubeIdFrom(w.videoUrl);
 
   return (
     <>
@@ -125,6 +129,30 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
           </div>
         </Section>
       ) : null}
+
+      {/* -- Video (dark). Conditional. Dark deliberately: with previews white
+             before it and the problem soft after it, the sequence stays valid
+             whether or not a video has been added. -- */}
+      {videoId && (
+        <Section tone="midnight">
+          <div className="max-w-3xl mx-auto px-6">
+            <AnimateIn>
+              <VideoFacade
+                videoId={videoId}
+                title={w.videoTitle}
+                poster={w.videoPoster?.url ?? null}
+                posterAlt={w.videoPoster?.alt ?? null}
+                duration={w.videoDuration}
+              />
+            </AnimateIn>
+            {w.videoCaption && (
+              <AnimateIn delay={0.06}>
+                <p className="mt-5 text-center text-[14px] text-white/45 leading-[1.7]">{w.videoCaption}</p>
+              </AnimateIn>
+            )}
+          </div>
+        </Section>
+      )}
 
       {/* -- 3. The problem (soft) -- */}
       {(w.problemHeadline || w.problemBody) && (
