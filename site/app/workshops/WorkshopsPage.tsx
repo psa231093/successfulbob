@@ -8,7 +8,7 @@ import TrackedCta from "@/components/TrackedCta";
 import VideoFacade from "@/components/VideoFacade";
 import WorkshopHero from "./WorkshopHero";
 import OverflowSection from "./OverflowSection";
-import { youTubeIdFrom, type Workshop, type WorkshopView } from "@/lib/workshop";
+import { seatLineFor, youTubeIdFrom, type Workshop, type WorkshopView } from "@/lib/workshop";
 
 /* Section order and backgrounds.
 
@@ -70,6 +70,12 @@ function Heading({
   );
 }
 
+// Sanity returns [] for an array field the editor emptied, and [] is truthy,
+// so a bare `w.problemBody` guard renders a section around nothing.
+function hasBlocks(v: unknown): boolean {
+  return Array.isArray(v) && v.length > 0;
+}
+
 export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; view: WorkshopView }) {
   const w = workshop;
   // Null for a missing or unparseable URL, which removes the section entirely.
@@ -94,8 +100,10 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
             )}
 
             <Stagger className="grid sm:grid-cols-2 gap-5 items-stretch" stagger={0.08}>
-              {w.previews.map((p) => (
-                <StaggerItem key={p.registrationUrl ?? p.dateDisplay} className="h-full">
+              {w.previews.map((p, i) => (
+                // Both fields are nullable mid-authoring; the index suffix keeps
+                // two half-filled previews from colliding on the same key.
+                <StaggerItem key={`${p.registrationUrl ?? p.dateDisplay ?? "preview"}-${i}`} className="h-full">
                   <div className="relative h-full flex flex-col rounded-2xl p-6 bg-white border border-[#e5e7eb]">
                     <PointerGlow />
                     <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-[#3f6bff] mb-2">
@@ -130,11 +138,12 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
         </Section>
       ) : null}
 
-      {/* -- Video (dark). Conditional. Dark deliberately: with previews white
-             before it and the problem soft after it, the sequence stays valid
-             whether or not a video has been added. -- */}
+      {/* -- Video (white). Conditional. White deliberately: it can end up next
+             to the dark hero (previews hidden in closed/next-cohort) or next to
+             the dark what-you-do section (problem empty), and only a light tone
+             keeps the no-adjacent-dark rule true in every combination. -- */}
       {videoId && (
-        <Section tone="midnight">
+        <Section>
           <div className="max-w-3xl mx-auto px-6">
             <AnimateIn>
               <VideoFacade
@@ -147,7 +156,7 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
             </AnimateIn>
             {w.videoCaption && (
               <AnimateIn delay={0.06}>
-                <p className="mt-5 text-center text-[14px] text-white/45 leading-[1.7]">{w.videoCaption}</p>
+                <p className="mt-5 text-center text-[14px] text-[#9ca3af] leading-[1.7]">{w.videoCaption}</p>
               </AnimateIn>
             )}
           </div>
@@ -155,7 +164,7 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
       )}
 
       {/* -- 3. The problem (soft) -- */}
-      {(w.problemHeadline || w.problemBody) && (
+      {(w.problemHeadline || hasBlocks(w.problemBody)) && (
         <Section tone="soft">
           <div className="relative max-w-3xl mx-auto px-6">
             <Numeral n="01" />
@@ -412,7 +421,19 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
                     <p className="text-[14px] text-white/60 leading-[1.7] mb-6">
                       {[w.primarySession.dateDisplay, w.primarySession.timeDisplay].filter(Boolean).join(" · ")}
                     </p>
-                    <TrackedCta cta={view.primaryCta} fitCallIcon={view.primaryCta.kind === "fit-call"} />
+                    {/* This card describes the MAIN session, so when that
+                        session is full it must not carry the button — in the
+                        sold-out state view.primaryCta sells the second session
+                        at a different price, and a reserve button under this
+                        card's price would sell one thing while labelled with
+                        another. The second-session block below has its own. */}
+                    {view.state === "sold-out" ? (
+                      <p className="text-[14px] font-semibold text-white/50">
+                        {seatLineFor(w.primarySession) ?? "This session is full"}
+                      </p>
+                    ) : (
+                      <TrackedCta cta={view.primaryCta} fitCallIcon={view.primaryCta.kind === "fit-call"} />
+                    )}
                   </div>
                 </AnimateIn>
               )}
@@ -470,7 +491,7 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
       )}
 
       {/* -- 12. Credibility (dark) -- */}
-      {(w.bobBody || w.bobHeadline) && (
+      {(hasBlocks(w.bobBody) || w.bobHeadline) && (
         <Section tone="midnight">
           <div className="max-w-4xl mx-auto px-6">
             <Heading eyebrow={w.bobEyebrow} dark>
@@ -539,10 +560,16 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
       <Section tone="dark">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[28px] md:text-[40px] font-bold leading-[1.15] tracking-[-0.015em] mb-5">
+            {/* closedMessage is copy authored for the closed state; the other
+                fit-call path here is sold-out-with-no-second-session, which is
+                full, not closed, and saying "closed" beneath a "sold out" hero
+                would contradict it. */}
             {view.finalBlock === "next-cohort"
               ? w.nextCohortHeadline ?? "The next cohort"
               : view.finalBlock === "fit-call"
-                ? w.closedMessage ?? "Registration is closed"
+                ? view.state === "closed"
+                  ? w.closedMessage ?? "Registration is closed"
+                  : "This cohort is full. Let's talk about the next one."
                 : w.finalBlockHeadline ?? "Reserve your seat"}
           </h2>
 

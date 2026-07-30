@@ -20,7 +20,14 @@ export default function OverflowSection({ w, view }: { w: Workshop; view: Worksh
   const cta = view.primaryCta.kind === "external" && view.primaryCta.track === "overflow_cta_click"
     ? view.primaryCta
     : s.registrationUrl
-      ? ({ kind: "external", label: `Reserve My Seat — ${s.priceDisplay ?? ""}`.trim(), href: s.registrationUrl, track: "overflow_cta_click" } as const)
+      ? ({
+          kind: "external",
+          // Dash only when there is a price to follow it, matching reserveCta
+          // in lib/workshop — a bare "Reserve My Seat —" reads as broken.
+          label: s.priceDisplay ? `Reserve My Seat — ${s.priceDisplay}` : "Reserve My Seat",
+          href: s.registrationUrl,
+          track: "overflow_cta_click",
+        } as const)
       : null;
 
   const facts = [

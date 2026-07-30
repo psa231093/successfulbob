@@ -27,12 +27,22 @@ export default defineType({
     defineField({ name: "priceDisplay", title: "Price (as shown)", description: 'e.g. "$950".', type: "string", validation: (R) => R.required() }),
     defineField({
       name: "priceAmount", title: "Price (number, not shown)", description: "The same price as a plain number, e.g. 950. Used for search-engine listings only.",
-      type: "number", validation: (R) => R.required().min(0).custom((amount, ctx) => {
-        const display = (ctx.parent as { priceDisplay?: string } | undefined)?.priceDisplay;
-        if (amount == null || !display) return true;
-        const digits = display.replace(/[^0-9]/g, "");
-        return digits === String(amount) ? true : `This does not match the displayed price "${display}". Update both or the price shown to search engines will be wrong.`;
-      }),
+      // The cross-check is a warning, not an error: it exists to catch the two
+      // fields drifting apart, and a heuristic must never block publishing.
+      // It compares the FIRST number in the display ("$950.00 early bird" ->
+      // 950) rather than every digit, so cents and secondary numbers in the
+      // text do not false-positive.
+      type: "number", validation: (R) => [
+        R.required().min(0),
+        R.custom((amount, ctx) => {
+          const display = (ctx.parent as { priceDisplay?: string } | undefined)?.priceDisplay;
+          if (amount == null || !display) return true;
+          const token = display.match(/\d[\d,]*(?:\.\d+)?/)?.[0];
+          if (!token) return true;
+          const shown = parseFloat(token.replace(/,/g, ""));
+          return shown === amount ? true : `This does not match the displayed price "${display}". Update both or the price shown to search engines will be wrong.`;
+        }).warning(),
+      ],
     }),
     defineField({ name: "currency", title: "Currency", type: "string", initialValue: "USD" }),
 

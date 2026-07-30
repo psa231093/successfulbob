@@ -27,13 +27,17 @@ export default function CookieBanner() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed bottom-0 left-0 right-0 z-[60] p-4 sm:p-5"
-      role="dialog"
-      aria-live="polite"
+      /* pointer-events-none on the full-width wrapper: on wide screens the
+         transparent strips either side of the centred card would otherwise
+         swallow clicks on whatever sits behind them. The card itself opts back
+         in. role=region rather than dialog — nothing is modal here, focus is
+         not trapped, and the page stays fully usable behind it. */
+      className="fixed bottom-0 left-0 right-0 z-[60] p-4 sm:p-5 pointer-events-none"
+      role="region"
       aria-label="Cookie preferences"
     >
       <div
-        className="max-w-4xl mx-auto rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
+        className="max-w-4xl mx-auto rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pointer-events-auto"
         style={{
           background: "rgba(6,17,38,0.97)",
           border: "1px solid rgba(63,107,255,0.28)",

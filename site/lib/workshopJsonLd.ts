@@ -88,10 +88,15 @@ export function buildWorkshopJsonLd(w: Workshop, view: WorkshopView, now: Date =
 
   const primary = w.primarySession;
 
+  // In next-cohort, registration is not open: the page offers "notify me", so
+  // publishing an InStock event with a registration URL would advertise
+  // something the page itself does not sell.
+  const registrationOpen = view.state !== "next-cohort";
+
   // Only publish an event that has not happened yet. Otherwise a closed page
   // goes on advertising a finished workshop. Self-corrects on revalidation, so
   // this can be up to an hour stale, which is acceptable.
-  if (primary && isUpcoming(primary.startsAt, now)) {
+  if (registrationOpen && primary && isUpcoming(primary.startsAt, now)) {
     graph.push(
       eventFor({
         id: `${SITE_URL}/workshops#event-primary`,

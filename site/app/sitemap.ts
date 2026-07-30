@@ -17,10 +17,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   if (!isSanityConfigured) return staticEntries;
 
-  const [slugs, hasWorkshop] = await Promise.all([
-    sanityClient.fetch<{ slug: string }[]>(allPostSlugsQuery),
-    sanityClient.fetch<boolean>(activeWorkshopExistsQuery),
-  ]);
+  // A CMS outage must degrade to the static entries, not turn /sitemap.xml
+  // into a 500 — Search Console treats an unfetchable sitemap as an error
+  // against the whole site.
+  let slugs: { slug: string }[] = [];
+  let hasWorkshop = false;
+  try {
+    [slugs, hasWorkshop] = await Promise.all([
+      sanityClient.fetch<{ slug: string }[]>(allPostSlugsQuery),
+      sanityClient.fetch<boolean>(activeWorkshopExistsQuery),
+    ]);
+  } catch {
+    return staticEntries;
+  }
 
   // Only advertise /workshops when a workshop is actually selected. Without a
   // live one the route renders a noindex placeholder, which should not be in

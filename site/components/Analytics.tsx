@@ -10,11 +10,14 @@ import { useConsent } from "@/components/ConsentProvider";
    still measures the four events in modelled form for the majority who never
    touch the banner.
 
-   The LinkedIn Insight Tag has no consent-mode equivalent, so the only correct
-   gate is not mounting it at all until the visitor accepts.
+   The denied defaults themselves are set by an inline script in the root
+   layout, which runs during document parse. That ordering is the load-bearing
+   part: a default set after gtag.js processes the queue is ignored. This
+   component only loads the library and issues the config call, both of which
+   run after hydration and therefore after the bootstrap.
 
-   Ordering matters: the defaults have to be defined before gtag.js loads, or
-   the library ignores them. beforeInteractive guarantees that. */
+   The LinkedIn Insight Tag has no consent-mode equivalent, so the only correct
+   gate is not mounting it at all until the visitor accepts. */
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const LINKEDIN_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
@@ -26,30 +29,13 @@ export default function Analytics() {
     <>
       {GA_ID && (
         <>
-          <Script id="consent-defaults" strategy="beforeInteractive">
-            {`window.dataLayer=window.dataLayer||[];
-function gtag(){dataLayer.push(arguments);}
-window.gtag=gtag;
-gtag('consent','default',{
-  ad_storage:'denied',
-  ad_user_data:'denied',
-  ad_personalization:'denied',
-  analytics_storage:'denied',
-  functionality_storage:'granted',
-  security_storage:'granted',
-  wait_for_update:500
-});
-gtag('js', new Date());`}
-          </Script>
-
           <Script
             id="ga-lib"
             strategy="afterInteractive"
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           />
-
           <Script id="ga-config" strategy="afterInteractive">
-            {`gtag('config','${GA_ID}');`}
+            {`window.gtag&&gtag('config','${GA_ID}');`}
           </Script>
         </>
       )}

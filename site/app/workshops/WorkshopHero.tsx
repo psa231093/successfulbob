@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { GhostButtonInline } from "@/components/Primitives";
 import TrackedCta from "@/components/TrackedCta";
@@ -59,10 +59,13 @@ function normalise(items: TruthItem[] | null | undefined) {
 
 function TruthInventoryPanel({ items }: { items: ReturnType<typeof normalise> }) {
   const reduceMotion = useReducedMotion();
-  // Rows begin neutral and resolve one at a time. With reduced motion they are
-  // already resolved on first paint: the status change is a state change rather
-  // than a transform, so MotionConfig alone would not suppress it.
-  const [resolved, setResolved] = useState(() => (reduceMotion ? items.length : 0));
+  /* Rows begin neutral and resolve one at a time. The initial state must be 0
+     unconditionally: useReducedMotion() is null on the server but reads the
+     media query on the first client render, so seeding the state from it makes
+     the server and client render different text for reduced-motion visitors,
+     which is a hydration error. The effect below resolves everything in one
+     step for them instead — one repaint after mount, no animation. */
+  const [resolved, setResolved] = useState(0);
 
   useEffect(() => {
     if (reduceMotion) {
@@ -196,15 +199,22 @@ function SessionFactsPanel({ w }: { w: Workshop }) {
 }
 
 export default function WorkshopHero({ w, view }: { w: Workshop; view: WorkshopView }) {
-  const items = normalise(w.heroInventoryItems);
-  const primary = w.primarySession;
+  // Memoised so the panel's timer effect (keyed on this array) does not restart
+  // the whole resolve animation if a parent ever re-renders the hero.
+  const items = useMemo(() => normalise(w.heroInventoryItems), [w.heroInventoryItems]);
+
+  /* When the main session is full and the second one is what the button sells,
+     the fact rail describes the second session. Otherwise the hero shows one
+     session's date and price above a button that reserves a different one. */
+  const factSession =
+    view.state === "sold-out" && view.showOverflow ? w.overflowSession : w.primarySession;
 
   const facts = [
-    primary?.dateDisplay,
-    primary?.timeDisplay,
-    primary?.durationDisplay,
-    primary?.priceDisplay,
-    primary?.capacity ? `${primary.capacity} seats` : null,
+    factSession?.dateDisplay,
+    factSession?.timeDisplay,
+    factSession?.durationDisplay,
+    factSession?.priceDisplay,
+    factSession?.capacity ? `${factSession.capacity} seats` : null,
   ].filter(Boolean) as string[];
 
   // Split the headline so only the authored phrase carries the gradient.

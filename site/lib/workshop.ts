@@ -196,6 +196,19 @@ export function seatLineFor(s: Session | null): string | null {
   return `Fewer than ${n} seats remain`;
 }
 
+/* "2026-08-15" -> "15 August 2026". A pure string mapping, deliberately not a
+   Date: Date formatting differs between the server and the visitor's browser,
+   which is a hydration error. Unrecognised input is returned unchanged. */
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export function formatDateOnly(iso: string | null): string | null {
+  if (!iso) return null;
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return iso;
+  const month = MONTHS[Number(m[2]) - 1];
+  if (!month) return iso;
+  return `${Number(m[3])} ${month} ${m[1]}`;
+}
+
 const FIT_CALL: Cta = { kind: "fit-call", label: "Schedule a 30-Minute Fit Call" };
 
 function reserveCta(s: Session | null, track: TrackEvent, labelPrefix: string): Cta | null {
@@ -207,9 +220,18 @@ function reserveCta(s: Session | null, track: TrackEvent, labelPrefix: string): 
 /* Resolves everything the page varies by state, in one place, so a state switch
    cannot half-apply and leave a "sold out" badge above a live reserve button. */
 export function buildWorkshopView(w: Workshop): WorkshopView {
-  const state: WorkshopState = w.state ?? "open";
   const primary = w.primarySession;
   const overflow = w.overflowSession;
+
+  /* The session's own Sold out switch wins over a stale page state. Without
+     this, ticking Sold out on the session while the state still says open
+     renders "This session is full" directly above a live reserve button, which
+     is the exact contradiction this module exists to prevent. Closed and
+     next-cohort are respected as-is: both already suppress the reserve CTA. */
+  let state: WorkshopState = w.state ?? "open";
+  if (primary?.soldOut && (state === "open" || state === "limited")) {
+    state = "sold-out";
+  }
 
   // The second session is revealed by its own switch rather than by the state,
   // so it can be shown before the first is completely full.
@@ -270,7 +292,7 @@ export function buildWorkshopView(w: Workshop): WorkshopView {
         state,
         heroBadge: line,
         seatLine: line,
-        seatAsOf: primary?.seatStatusAsOf ?? null,
+        seatAsOf: formatDateOnly(primary?.seatStatusAsOf ?? null),
         primaryCta: primaryReserve ?? FIT_CALL,
         showPreviews: true,
         showOverflow,
@@ -280,18 +302,23 @@ export function buildWorkshopView(w: Workshop): WorkshopView {
     }
 
     case "open":
-    default:
+    default: {
+      // A bound low enough to display carries its freshness date in any state,
+      // not only in "limited" — the editor maintains one, so show it.
+      const bound = primary?.seatsRemainingBound;
+      const showAsOf = bound != null && bound <= 8;
       return {
         state: "open",
         heroBadge: [primary?.label, primary?.dateDisplay].filter(Boolean).join(" · ") || null,
         seatLine: seatLineFor(primary),
-        seatAsOf: null,
+        seatAsOf: showAsOf ? formatDateOnly(primary?.seatStatusAsOf ?? null) : null,
         primaryCta: primaryReserve ?? FIT_CALL,
         showPreviews: true,
         showOverflow,
         overflowSeatLine: showOverflow ? seatLineFor(overflow) : null,
         finalBlock: primaryReserve ? "register" : "fit-call",
       };
+    }
   }
 }
 
@@ -323,7 +350,10 @@ export function withCampaign(url: string, source: string | null | undefined): st
   if (!source) return url;
   try {
     const u = new URL(url);
-    if (!/(^|\.)luma\.com$/i.test(u.hostname)) return url;
+    // Both hosts Luma issues: luma.com today, lu.ma historically (still live
+    // and still what their app copies in some places). Missing either silently
+    // drops the only attribution channel that survives into registrations.
+    if (!/(^|\.)(luma\.com|lu\.ma)$/i.test(u.hostname)) return url;
     u.searchParams.set("utm_source", source);
     return u.toString();
   } catch {

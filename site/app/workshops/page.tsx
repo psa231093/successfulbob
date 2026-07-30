@@ -54,7 +54,10 @@ export default async function WorkshopsRoute() {
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          // The escape matters: this JSON carries CMS-authored text, and a
+          // literal "</script>" inside it would terminate the tag and hand the
+          // rest of the payload to the HTML parser.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       )}
       <WorkshopsPage workshop={workshop} view={view} />

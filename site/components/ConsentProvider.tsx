@@ -52,15 +52,17 @@ function persist(choice: ConsentChoice) {
 /* Consent Mode stops analytics cookies being used, but it does not remove ones
    already written. Someone who accepts and later declines would otherwise keep
    an identifying cookie until it expired, which is not what declining is
-   understood to mean. */
-function clearAnalyticsCookies() {
+   understood to mean. Covers LinkedIn's first-party cookies (ln_or, li_fat_id)
+   as well as Google's — LinkedIn has no consent mode, so cleanup is the only
+   withdrawal mechanism it gets. */
+function clearTrackingCookies() {
   if (typeof document === "undefined") return;
   const host = window.location.hostname;
   // Also try the dot-prefixed parent domain, which is where GA writes.
   const domains = [undefined, host, `.${host}`, `.${host.split(".").slice(-2).join(".")}`];
   document.cookie.split(";").forEach((entry) => {
     const name = entry.split("=")[0]?.trim();
-    if (!name || !/^_ga|^_gid$|^_gcl/.test(name)) return;
+    if (!name || !/^_ga|^_gid$|^_gcl|^ln_or$|^li_fat_id$/.test(name)) return;
     domains.forEach((d) => {
       document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d ? `; domain=${d}` : ""}`;
     });
@@ -106,7 +108,15 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
     setChoice("denied");
     persist("denied");
     updateGtagConsent("denied");
-    clearAnalyticsCookies();
+    clearTrackingCookies();
+    /* Withdrawing consent after the LinkedIn tag has loaded needs a reload:
+       script tags are not unloaded when their component unmounts, so without
+       this the tag keeps running until the next navigation — and the privacy
+       page promises that declining means it is not loaded at all. The choice is
+       already persisted, so the banner does not reappear. */
+    if (typeof window !== "undefined" && window._linkedin_partner_id) {
+      window.location.reload();
+    }
   }, []);
 
   // Lets the footer link bring the banner back so a choice can be changed.
@@ -118,6 +128,9 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
       /* ignore */
     }
     updateGtagConsent("denied");
+    // Matches what the page now says ("not made a choice yet"): no choice, no
+    // identifying cookies sitting around from the earlier acceptance.
+    clearTrackingCookies();
   }, []);
 
   return (

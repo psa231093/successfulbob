@@ -109,6 +109,18 @@ const jsonLd = {
   ],
 };
 
+/* Consent Mode v2 bootstrap. Must exist before gtag.js executes, and gtag.js is
+   loaded by a client component, so this lives here as a server-rendered inline
+   script: it runs during document parse, ahead of any bundle. next/script's
+   beforeInteractive cannot do this job — it is only supported in the root
+   layout as a component, and rendering it from a nested client component makes
+   React log an error and skip execution on client-side navigations. */
+const consentBootstrap = `window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+window.gtag=gtag;
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});
+gtag('js',new Date());`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -121,6 +133,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <script dangerouslySetInnerHTML={{ __html: consentBootstrap }} />
+        )}
         {/* ConsentProvider is outermost so the banner, the footer link and the
             privacy page can all read and change the choice. */}
         <ConsentProvider>

@@ -20,9 +20,12 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   // Analytics and LinkedIn pixel fallbacks. No YouTube host: video posters come
   // from the CMS, so the thumbnail service is never contacted.
-  "img-src 'self' data: https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://px.ads.linkedin.com https://px4.ads.linkedin.com",
+  // doubleclick + google.com/ccm are the conversion-linking endpoints GA4 uses
+  // once ad consent is GRANTED — without them the exact visitors who accepted
+  // cookies are the ones whose attribution pings get blocked.
+  "img-src 'self' data: https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com https://px.ads.linkedin.com https://px4.ads.linkedin.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.sanity.io https://*.apicdn.sanity.io https://formspree.io https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://px.ads.linkedin.com",
+  "connect-src 'self' https://*.sanity.io https://*.apicdn.sanity.io https://formspree.io https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://px.ads.linkedin.com",
   // 'self' restored: a directive that is present does not fall back to
   // default-src, so its absence was silently blocking same-origin iframes.
   // Both YouTube hosts are listed because nocookie redirects to the main domain
