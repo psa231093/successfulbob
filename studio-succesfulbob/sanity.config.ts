@@ -24,11 +24,12 @@ export default defineConfig({
               .id(SINGLETON)
               .child(S.document().schemaType(SINGLETON).documentId(SINGLETON).title('Workshop Settings')),
             S.divider(),
-            S.documentTypeListItem('workshop').title('Workshops'),
+            S.documentTypeListItem('workshop').title('Workshop'),
             S.divider(),
-            S.documentTypeListItem('post').title('Posts'),
-            S.documentTypeListItem('category').title('Categories'),
-            S.documentTypeListItem('author').title('Authors'),
+            // Singular, matching the names the editor guides already use.
+            S.documentTypeListItem('post').title('Post'),
+            S.documentTypeListItem('category').title('Category'),
+            S.documentTypeListItem('author').title('Author'),
           ]),
     }),
     visionTool(),

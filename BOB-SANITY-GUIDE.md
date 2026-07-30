@@ -1,6 +1,8 @@
-# How to Publish & Manage Blog Posts on Successfulbob.com
+# How to Publish & Manage Content on Successfulbob.com
 
 > **Your CMS is Sanity Studio** — a private web app where you write and edit content. Once you hit Publish, it goes live on the site automatically. No code, no deploys, no waiting.
+>
+> This guide covers **blog posts** (most of the document) and **workshops** (the section near the end).
 
 ---
 
@@ -18,13 +20,15 @@ Log in with your Sanity account (the email address you used when you signed up).
 
 ## The Layout at a Glance
 
-When you log in you'll see a sidebar on the left with three sections:
+When you log in you'll see a sidebar on the left:
 
 | Section | What it is |
 |---|---|
+| **Workshop Settings** | One single entry that decides *which* workshop is live at `/workshops`. See the workshops section below. |
+| **Workshop** | Each workshop you have run or plan to run |
 | **Post** | Your blog articles — this is where you'll spend most of your time |
-| **Author** | Author profiles (yours is already set up) |
 | **Category** | The topic categories shown on the Insights page |
+| **Author** | Author profiles (yours is already set up) |
 
 Click any item in the sidebar to open a list of documents. Click a document to edit it. Simple.
 
@@ -202,6 +206,69 @@ Before you hit Publish, run through this mental checklist:
 - [ ] Proofread once in the preview pane
 
 Everything else (tags, OG overrides, FAQs, related posts) is optional enhancement.
+
+---
+
+# Workshops
+
+The workshops page at `successfulbob.com/workshops` is fully yours to edit. Running a new workshop needs no developer involvement at all: you create a new Workshop entry, fill it in, and point the settings at it.
+
+## The two things you edit
+
+**Workshops** holds one entry per workshop. Old ones stay as a record, so last year's cohort keeps its copy, agenda and testimonials.
+
+**Workshop Settings** is a single entry with one field: which workshop is currently live. Changing that dropdown swaps the entire page over. There is deliberately only ever one Settings entry. You cannot duplicate or delete it, because two of them would make the page pick one at random.
+
+## Running a new workshop
+
+1. Open **Workshops** and create a new entry.
+2. Work through the tabs across the top: Identity, Hero, Sessions, Previews, Video, Content, Audience, Format, Pricing, Credit, Credibility, FAQs, Closing, SEO.
+3. Publish it.
+4. Open **Workshop Settings** and point *Live workshop* at your new entry.
+
+That is the whole process. The page updates within seconds.
+
+## The page state
+
+On the **Identity** tab, *Page State* controls how the page behaves:
+
+| State | What the page does |
+|---|---|
+| **Open** | Selling normally. Shows "Limited to 12 participants". |
+| **Limited** | Shows a seat count. Use with *Seats remaining* on the Sessions tab. |
+| **Sold out** | Main session shown as full; the button switches to the second session. |
+| **Closed** | No dates announced. The button becomes "Schedule a Fit Call". |
+| **Next cohort** | A future date is announced. Requires the date on the Closing tab. |
+
+## Seat numbers: the one rule that matters
+
+The page will never show an exact remaining count, and that is on purpose.
+
+- Leave *Seats remaining* **blank** until 8 or fewer seats are left. Below that it shows "Fewer than N seats remain".
+- **Only ever revise the number down.** Never up.
+
+"Fewer than 4" only gets *more* true as people register, so it can't be caught out. "4 seats left" becomes false the moment a fifth person books, and on a page selling clear thinking, being caught overstating scarcity is expensive. Luma shows the real number one click away anyway.
+
+Set *Seat count as of* whenever you change the number, and the page will say so.
+
+## The second session
+
+The second, later session is set up on the **Sessions** tab and stays hidden until you tick **Show the second session on the page**.
+
+Tick it when roughly **3 seats remain** on the main session. That gives the second session time to fill while the first still reads as nearly full, and the main button stays on the founding price, so the scarcity works for you rather than against you.
+
+Two things to keep honest:
+
+- **Minimum-participants promise.** This is a commitment buyers read before paying, so it has to match what you will actually do. It should state the minimum, that they are charged at booking, that they are refunded in full otherwise, and **the date you decide by**. The decision is manual, so put that date in your own calendar.
+- **Price fields come in pairs.** *Price (as shown)* is the "$1,250" the page displays. *Price (number)* is what search engines read. Change one and change the other, or Google will advertise the wrong price. Sanity will warn you if they disagree.
+
+## A few things that are deliberate
+
+- **The follow-up booking link does not go on the page.** It is sent privately after the session, so people who did not attend cannot book a slot.
+- **The video is optional.** Leave *YouTube URL* blank and the whole video section disappears. The page is written to work without it.
+- **Testimonials stay hidden until you add one.** No empty "what people are saying" block on launch day.
+- **Times are typed, not calculated.** Type "12:30 to 3:30 PM ET / 9:30 AM to 12:30 PM PT" exactly as you want it read. Every visitor sees the same string.
+- **Substitutions are a refund and a fresh registration**, not a transfer. The platform can't transfer tickets on our plan, so the seat rules should say so plainly.
 
 ---
 
