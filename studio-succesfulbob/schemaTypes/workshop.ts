@@ -104,12 +104,16 @@ export default defineType({
     /* -- Sessions -- */
     defineField({ name: "primarySession", title: "Main session", type: "workshopSession", group: "sessions", validation: (R) => R.required() }),
     defineField({ name: "overflowSession", title: "Second session (optional)", description: "A separate, later session at a different price. Hidden from the page until you tick the box below.", type: "workshopSession", group: "sessions" }),
-    defineField({ name: "revealOverflow", title: "Show the second session on the page", description: "Independent of the page state, so you can reveal it before the main session is completely full.", type: "boolean", initialValue: false, group: "sessions" }),
+    defineField({
+      name: "revealOverflow", title: "Show the second session on the page",
+      description: "Tick this when roughly 3 seats remain on the main session. Revealing it early gives the second session time to fill while the first still looks scarce. Deliberately independent of the page state, so the main session can still read as open.",
+      type: "boolean", initialValue: false, group: "sessions",
+    }),
     defineField({ name: "overflowHeadline", title: "Second session headline", type: "string", group: "sessions" }),
     defineField({ name: "overflowBody", title: "Second session body", type: "text", rows: 3, group: "sessions" }),
     defineField({
-      name: "minimumThresholdNote", title: "Minimum-participants promise", type: "text", rows: 3, group: "sessions",
-      description: "The commitment shown to buyers, e.g. how many participants are needed to run and what happens to their payment if that number is not reached. Required whenever a second session exists.",
+      name: "minimumThresholdNote", title: "Minimum-participants promise", type: "text", rows: 4, group: "sessions",
+      description: "Shown to buyers as a commitment, so it has to match what you will actually do. State the minimum, that they are charged at booking, that they are refunded in full if it is not reached, and the date you decide by. The decision is manual, so put that date in your own calendar too. Required whenever a second session exists.",
       validation: (R) => R.custom((note, ctx) => {
         const doc = ctx.document as { overflowSession?: unknown } | undefined;
         if (doc?.overflowSession && !note) return "A second session is set up, so this promise must be filled in. It appears on the page as a commitment to buyers.";
