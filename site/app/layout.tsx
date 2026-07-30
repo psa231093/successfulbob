@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
 import { CalendarModalProvider } from "@/components/CalendarModal";
 import ScrollRestorer from "@/components/ScrollRestorer";
+import { UtmProvider } from "@/components/UtmProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -117,14 +118,16 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <MotionProvider>
-          <CalendarModalProvider>
-            <ScrollRestorer />
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </CalendarModalProvider>
-        </MotionProvider>
+        <UtmProvider>
+          <MotionProvider>
+            <CalendarModalProvider>
+              <ScrollRestorer />
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </CalendarModalProvider>
+          </MotionProvider>
+        </UtmProvider>
       </body>
     </html>
   );
