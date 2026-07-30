@@ -10,6 +10,7 @@ import { useCalendarModal } from "@/components/CalendarModal";
 const links = [
   { href: "/production-ready", label: "Production Ready" },
   { href: "/advisory-work", label: "Advisory Work" },
+  { href: "/workshops", label: "Workshops" },
   { href: "/insights", label: "Insights" },
   { href: "/about", label: "About Bob" },
   { href: "/contact", label: "Contact" },
@@ -51,8 +52,11 @@ export default function Navbar() {
           <Logo className="h-9 w-auto" />
         </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop nav. Breaks at lg rather than md: six links plus the logo and
+            the fit-call button do not fit between 768 and 1024, so the mobile
+            menu covers that band. gap-6 buys back the width the sixth link
+            costs. */}
+        <div className="hidden lg:flex items-center gap-6">
           {links.map((l) => {
             const active = isActive(l.href);
             return (
@@ -97,7 +101,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-white/70 hover:text-white transition-colors"
+          className="lg:hidden text-white/70 hover:text-white transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -127,7 +131,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden overflow-hidden bg-[#0b1734] border-t border-white/10"
+            className="lg:hidden overflow-hidden bg-[#0b1734] border-t border-white/10"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {links.map((l) => {

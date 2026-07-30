@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { sanityClient, isSanityConfigured } from "@/lib/sanity";
-import { allPostSlugsQuery } from "@/lib/queries";
+import { allPostSlugsQuery, activeWorkshopExistsQuery } from "@/lib/queries";
 
 const SITE_URL = "https://successfulbob.com";
 
@@ -12,11 +12,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/insights`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.7 },
+    { url: `${SITE_URL}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
   ];
 
   if (!isSanityConfigured) return staticEntries;
 
-  const slugs = await sanityClient.fetch<{ slug: string }[]>(allPostSlugsQuery);
+  const [slugs, hasWorkshop] = await Promise.all([
+    sanityClient.fetch<{ slug: string }[]>(allPostSlugsQuery),
+    sanityClient.fetch<boolean>(activeWorkshopExistsQuery),
+  ]);
+
+  // Only advertise /workshops when a workshop is actually selected. Without a
+  // live one the route renders a noindex placeholder, which should not be in
+  // the sitemap. Weekly, because seat status changes during a selling window.
+  const workshopEntries: MetadataRoute.Sitemap = hasWorkshop
+    ? [{ url: `${SITE_URL}/workshops`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 }]
+    : [];
 
   const articleEntries: MetadataRoute.Sitemap = (slugs ?? []).map((s) => ({
     url: `${SITE_URL}/insights/${s.slug}`,
@@ -25,5 +36,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...articleEntries];
+  return [...staticEntries, ...workshopEntries, ...articleEntries];
 }

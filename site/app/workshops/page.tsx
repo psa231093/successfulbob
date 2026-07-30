@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getActiveWorkshop, buildWorkshopView } from "@/lib/workshop";
+import { buildWorkshopJsonLd } from "@/lib/workshopJsonLd";
 import WorkshopsPage from "./WorkshopsPage";
 import WorkshopPlaceholder from "./WorkshopPlaceholder";
 
@@ -45,5 +46,18 @@ export default async function WorkshopsRoute() {
   // throw away whatever ranking the page has accumulated.
   if (!workshop) return <WorkshopPlaceholder />;
 
-  return <WorkshopsPage workshop={workshop} view={buildWorkshopView(workshop)} />;
+  const view = buildWorkshopView(workshop);
+  const jsonLd = buildWorkshopJsonLd(workshop, view);
+
+  return (
+    <>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      <WorkshopsPage workshop={workshop} view={view} />
+    </>
+  );
 }
