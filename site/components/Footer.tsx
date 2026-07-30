@@ -7,6 +7,7 @@ import { useCalendarModal } from "@/components/CalendarModal";
 const explore = [
   { href: "/production-ready", label: "Production Ready" },
   { href: "/advisory-work", label: "Advisory Work" },
+  { href: "/workshops", label: "Workshops" },
   { href: "/insights", label: "Insights" },
 ];
 
@@ -14,6 +15,7 @@ const company = [
   { href: "/about", label: "About Bob" },
   { href: "/contact", label: "Contact" },
   { href: "/vault", label: "Customer Vault" },
+  { href: "/privacy", label: "Privacy" },
 ];
 
 export default function Footer() {

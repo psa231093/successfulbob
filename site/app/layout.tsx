@@ -7,6 +7,9 @@ import MotionProvider from "@/components/MotionProvider";
 import { CalendarModalProvider } from "@/components/CalendarModal";
 import ScrollRestorer from "@/components/ScrollRestorer";
 import { UtmProvider } from "@/components/UtmProvider";
+import { ConsentProvider } from "@/components/ConsentProvider";
+import Analytics from "@/components/Analytics";
+import CookieBanner from "@/components/CookieBanner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -118,16 +121,22 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <UtmProvider>
-          <MotionProvider>
-            <CalendarModalProvider>
-              <ScrollRestorer />
-              <Navbar />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </CalendarModalProvider>
-          </MotionProvider>
-        </UtmProvider>
+        {/* ConsentProvider is outermost so the banner, the footer link and the
+            privacy page can all read and change the choice. */}
+        <ConsentProvider>
+          <UtmProvider>
+            <MotionProvider>
+              <CalendarModalProvider>
+                <ScrollRestorer />
+                <Navbar />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </CalendarModalProvider>
+            </MotionProvider>
+            <Analytics />
+            <CookieBanner />
+          </UtmProvider>
+        </ConsentProvider>
       </body>
     </html>
   );
