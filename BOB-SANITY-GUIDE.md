@@ -11,7 +11,7 @@
 Open your browser and go to:
 
 ```
-https://succesfulbob.sanity.studio
+https://successfulbob.sanity.studio
 ```
 
 Log in with your Sanity account (the email address you used when you signed up). Bookmark this URL — it's your editorial home base.
