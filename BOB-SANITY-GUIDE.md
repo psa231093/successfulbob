@@ -211,64 +211,127 @@ Everything else (tags, OG overrides, FAQs, related posts) is optional enhancemen
 
 # Workshops
 
-The workshops page at `successfulbob.com/workshops` is fully yours to edit. Running a new workshop needs no developer involvement at all: you create a new Workshop entry, fill it in, and point the settings at it.
+The workshops page at `successfulbob.com/workshops` is entirely yours to run. You do not need Pablo to change a headline, update a date, or launch a new topic next year. Everything on that page comes from one document you open and edit yourself, using the exact same motions you just learned for blog posts: click a field, type, click Publish.
 
-## The two things you edit
+This section walks through it slowly, start to finish, assuming zero Sanity experience beyond what you picked up writing a blog post.
 
-**Workshops** holds one entry per workshop. Old ones stay as a record, so last year's cohort keeps its copy, agenda and testimonials.
+## Where to find it
 
-**Workshop Settings** is a single entry with one field: which workshop is currently live. Changing that dropdown swaps the entire page over. There is deliberately only ever one Settings entry. You cannot duplicate or delete it, because two of them would make the page pick one at random.
+1. Log into the Studio, same URL and login as always.
+2. Click **Workshop** in the left sidebar.
+3. Click **Product Truth Workshop** (or whichever workshop you're editing).
 
-## Running a new workshop
+You're now looking at the same kind of editing screen as a blog post. It's just organized differently because there's more to fill in.
 
-1. Open **Workshops** and create a new entry.
-2. Work through the tabs across the top: Identity, Hero, Sessions, Previews, Video, Content, Audience, Format, Pricing, Credit, Credibility, FAQs, Closing, SEO.
-3. Publish it.
-4. Open **Workshop Settings** and point *Live workshop* at your new entry.
+## What you'll see
 
-That is the whole process. The page updates within seconds.
+Across the top of the document is a row of tabs. Each tab is a small group of related fields, so you're never looking at all sixty-odd fields at once:
 
-## The page state
-
-On the **Identity** tab, *Page State* controls how the page behaves:
-
-| State | What the page does |
+| Tab | What it controls |
 |---|---|
-| **Open** | Selling normally. Shows "Limited to 12 participants". |
-| **Limited** | Shows a seat count. Use with *Seats remaining* on the Sessions tab. |
-| **Sold out** | Main session shown as full; the button switches to the second session. |
-| **Closed** | No dates announced. The button becomes "Schedule a Fit Call". |
-| **Next cohort** | A future date is announced. Requires the date on the Closing tab. |
+| **Identity** | The workshop's internal title, and the Page State dropdown covered below |
+| **Hero** | The big headline block at the very top of the page |
+| **Sessions** | Dates, times, prices, and the second (overflow) session |
+| **Previews** | The two free preview sessions |
+| **Video** | The optional intro video |
+| **Content** | The "problem," "what you'll do," and "what you'll leave with" sections |
+| **Audience** | Who it's for, and who it's not for |
+| **Format** | The agenda, pre-work, and follow-up |
+| **Pricing** | Seat rules and the refund policy |
+| **Credit** | The Assessment credit offer |
+| **Credibility** | Your bio and photo |
+| **FAQs** | The question and answer accordion |
+| **Closing** | The final call-to-action block, plus the messages shown when the page is closed or announcing a next cohort |
+| **SEO** | What Google shows in search results |
+
+Click a tab name to jump straight to those fields. You never need to scroll through the whole document to find one thing.
+
+## Editing a piece of text
+
+Click into any field and type, exactly like a Word document. There's no separate "edit mode" to turn on.
+
+Sanity saves your work automatically as you type, the same as it does for blog posts. But **saved is not the same as published.** To make a change visible on the live site, click the **Publish** button in the top right corner. Until you do, your edit sits there safely, but nobody visiting the site can see it.
+
+**How fast does a change go live after you publish?** Usually within a few seconds. On the rare occasion it takes longer, it will be live within an hour at the outside.
+
+## Changing the page state
+
+On the **Identity** tab, find **Page State**. You'll see five round buttons stacked vertically, click the one that matches where things actually stand:
+
+| Click this | What visitors then see |
+|---|---|
+| **Open, selling normally** | The normal "Reserve My Founding Seat" button, and "Limited to 12 participants" |
+| **Limited, showing a seat count** | A truthful "Fewer than N seats remain" line, using the number you set on the Sessions tab (see below) |
+| **Sold out, main session full** | The main session shown as full; the button switches to the second session, if you've turned that on |
+| **Closed, no future date announced** | The button becomes "Schedule a Fit Call" |
+| **Next cohort, a future date is announced** | Requires a date on the Closing tab first, see that tab |
+
+Click Publish after changing this. The badge at the top of the page, the seat line, the main button, and the block at the very bottom all update together automatically. You only ever touch this one control.
 
 ## Seat numbers: the one rule that matters
 
-The page will never show an exact remaining count, and that is on purpose.
+The page will never show an exact number of seats remaining, and that's deliberate.
 
-- Leave *Seats remaining* **blank** until 8 or fewer seats are left. Below that it shows "Fewer than N seats remain".
-- **Only ever revise the number down.** Never up.
+Here's the reasoning in plain terms: if you write "4 seats left" and a fifth person registers two minutes later, the page is now wrong, in the direction that costs you credibility. If you write "fewer than 4 seats remain" instead, that sentence stays true no matter how many more people book afterward. It can only ever become *more* accurate over time, never less.
 
-"Fewer than 4" only gets *more* true as people register, so it can't be caught out. "4 seats left" becomes false the moment a fifth person books, and on a page selling clear thinking, being caught overstating scarcity is expensive. Luma shows the real number one click away anyway.
+So the rule is:
 
-Set *Seat count as of* whenever you change the number, and the page will say so.
+1. Leave **Seats remaining (upper bound)** on the Sessions tab blank until you're down to 8 or fewer seats.
+2. Once you are, type that number into the box, for example type `4`.
+3. Set **Seat count as of** to today's date. This opens a small calendar for you to pick from. The page will then show "as of [that date]" next to the seat line.
+4. Only ever move that number down. Never raise it again, even if a registration later falls through.
 
-## The second session
+Luma always shows you the real, exact number when you check it directly. This field is only about what a stranger sees on the marketing page before they've committed to anything.
 
-The second, later session is set up on the **Sessions** tab and stays hidden until you tick **Show the second session on the page**.
+## The second session (the Friday overflow date)
 
-Tick it when roughly **3 seats remain** on the main session. That gives the second session time to fill while the first still reads as nearly full, and the main button stays on the founding price, so the scarcity works for you rather than against you.
+The second, later session lives on the **Sessions** tab, inside the **Second session (optional)** group of fields. It's hidden from the live page by default.
 
-Two things to keep honest:
+To reveal it: find **Show the second session on the page**. It's a switch you click to turn on or off. Turn it on, then click Publish.
 
-- **Minimum-participants promise.** This is a commitment buyers read before paying, so it has to match what you will actually do. It should state the minimum, that they are charged at booking, that they are refunded in full otherwise, and **the date you decide by**. The decision is manual, so put that date in your own calendar.
-- **Price fields come in pairs.** *Price (as shown)* is the "$1,250" the page displays. *Price (number)* is what search engines read. Change one and change the other, or Google will advertise the wrong price. Sanity will warn you if they disagree.
+**When to turn it on:** roughly when 3 seats remain on the main session, not when it's completely full. That gives the second session a head start on filling while the first still reads as nearly sold out, which works in your favor rather than against it.
+
+Two fields on this tab deserve extra care:
+
+- **Minimum-participants promise.** This is a written commitment that buyers read before they pay for the second session, so it has to match exactly what you'll actually do. It should state the minimum number of people required, that they're charged when they book, that they're refunded in full if the minimum isn't reached, and the date you'll make that call by. Whatever date you write here, also put it on your own calendar. Sanity has no way to remind you.
+- **Price (as shown)** and **Price (number)** need to agree with each other. "Price (as shown)" is the "$1,250" a visitor reads on the page. "Price (number)" is that same price written as a plain number, used only behind the scenes for how Google lists the event. If you change one, change the other to match. Sanity will show you a warning if they disagree.
+
+## Running this workshop again next year
+
+You don't need to build a new workshop from a blank page. Duplicate the old one:
+
+1. Open the workshop you want to reuse.
+2. Click the three-dot menu (⋯) next to the Publish button, the same menu you'd use to unpublish or delete a blog post.
+3. Choose **Duplicate**.
+4. A full copy opens. Update the dates, prices, Luma registration links, and any copy that's changed since last time. Everything else carries over exactly as it was.
+5. Click Publish on the copy.
+6. Open **Workshop Settings** and point **Live workshop** at the new copy.
+
+The original stays exactly as it was, untouched, as a permanent record of that cohort. It simply stops being the one shown on the live page.
+
+One thing that works differently: **Workshop Settings itself can't be duplicated or deleted.** There's deliberately only ever one, so the page never has to guess which workshop is supposed to be live. You'll always just be pointing that one entry at a different workshop, not creating new settings entries.
 
 ## A few things that are deliberate
 
-- **The follow-up booking link does not go on the page.** It is sent privately after the session, so people who did not attend cannot book a slot.
-- **The video is optional.** Leave *YouTube URL* blank and the whole video section disappears. The page is written to work without it.
-- **Testimonials stay hidden until you add one.** No empty "what people are saying" block on launch day.
-- **Times are typed, not calculated.** Type "12:30 to 3:30 PM ET / 9:30 AM to 12:30 PM PT" exactly as you want it read. Every visitor sees the same string.
-- **Substitutions are a refund and a fresh registration**, not a transfer. The platform can't transfer tickets on our plan, so the seat rules should say so plainly.
+- **The follow-up booking link does not go on the page.** It's sent to each participant privately after the session, so someone who didn't attend can't book a slot meant for a paying customer.
+- **The video is optional.** Leave the YouTube URL blank on the Video tab and the entire video section disappears from the page on its own. The page is built to work fully without it.
+- **Testimonials stay hidden until you add one.** No empty "what people are saying" section shows on launch day, or ever, until there's at least one real testimonial entered.
+- **Times are typed, not calculated.** Type "12:30 to 3:30 PM ET / 9:30 AM to 12:30 PM PT" exactly as you want it read. Every visitor sees that exact sentence, regardless of where they're located.
+- **Substitutions are handled as a refund and a fresh registration, not a transfer.** The registration platform can't transfer a ticket on our current plan, so the seat rules on the Pricing tab should say this plainly rather than promise a transfer you can't deliver.
+
+## If something doesn't look right
+
+**I clicked Publish, but I don't see my change on the live page yet.**
+Give it a few seconds and reload the page in a fresh tab, your browser may be showing you a cached copy from before your edit. If it's genuinely still missing after a minute, double check that you clicked Publish and not just closed the tab. Sanity saves your typing automatically as a draft, but a draft by itself never reaches the live site, only Publish does that.
+
+**I'm not sure if what I'm looking at is live, or an unpublished draft.**
+Look at the Publish button itself. If it's shown in solid color, you have changes waiting that visitors can't see yet. If it's greyed out, everything in front of you is already what's live.
+
+**I want to change something but I'm not sure which tab it's on.**
+Check the table under "What you'll see" above, or just click through the tabs one at a time. Each tab only holds a handful of fields, so scanning all of them takes under a minute.
+
+**I'm not sure what to fill in for the placeholder content Pablo flagged.**
+See the separate document Pablo sent you, the Workshop Placeholder Content Checklist. It lists every field still marked `[PLACEHOLDER]`, organized by these exact same tab names, so you can work through the two documents side by side.
 
 ---
 
