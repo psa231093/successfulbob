@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SectionLabel, AccentBar, Numeral, PointerGlow, GhostButtonInline, OutlineButton } from "@/components/Primitives";
 import { AnimateIn, Stagger, StaggerItem } from "@/components/AnimateIn";
 import FAQAccordion from "@/components/FAQAccordion";
@@ -490,35 +491,61 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
         </Section>
       )}
 
-      {/* -- 12. Credibility (dark) -- */}
+      {/* -- 12. Credibility (dark) --
+             Asymmetric photo + bio, not another stacked card grid: this is the
+             one section on the page that is inherently about a single person,
+             so it is the natural place to break the repeated grid-of-cards
+             rhythm used everywhere else. Falls back to the text-only layout
+             when no photo is uploaded, so it never renders an empty frame. -- */}
       {(hasBlocks(w.bobBody) || w.bobHeadline) && (
         <Section tone="midnight">
           <div className="max-w-4xl mx-auto px-6">
-            <Heading eyebrow={w.bobEyebrow} dark>
-              {w.bobHeadline ?? "Who runs it"}
-            </Heading>
-            <AnimateIn delay={0.05}>
-              <div className="max-w-2xl">
-                <RichText value={w.bobBody} tone="dark" />
+            <div className={w.bobPhoto?.url ? "grid md:grid-cols-[0.85fr_1.15fr] gap-10 md:gap-12 items-center" : ""}>
+              {w.bobPhoto?.url && (
+                <AnimateIn>
+                  <div
+                    className="relative w-full max-w-[280px] md:max-w-none mx-auto aspect-[4/5] rounded-2xl overflow-hidden"
+                    style={{ border: "1px solid rgba(63,107,255,0.28)", boxShadow: "0 24px 60px rgba(2,8,23,0.35)" }}
+                  >
+                    <Image
+                      src={w.bobPhoto.url}
+                      alt={w.bobPhoto.alt ?? w.bobHeadline ?? "Photo"}
+                      fill
+                      sizes="(max-width: 768px) 280px, 360px"
+                      className="object-cover"
+                    />
+                  </div>
+                </AnimateIn>
+              )}
+
+              <div>
+                <Heading eyebrow={w.bobEyebrow} dark>
+                  {w.bobHeadline ?? "Who runs it"}
+                </Heading>
+                <AnimateIn delay={0.05}>
+                  <div className={w.bobPhoto?.url ? "" : "max-w-2xl"}>
+                    <RichText value={w.bobBody} tone="dark" />
+                  </div>
+                </AnimateIn>
+                {w.bobStats?.length ? (
+                  <Stagger className="flex flex-wrap gap-x-12 gap-y-6 mt-10" stagger={0.08}>
+                    {w.bobStats.map((s) => (
+                      <StaggerItem key={s.label ?? ""}>
+                        <div>
+                          <p
+                            className="text-[34px] font-bold bg-clip-text text-transparent leading-none mb-1.5"
+                            style={{ backgroundImage: "linear-gradient(90deg, #3f6bff, #8b5cf6)" }}
+                          >
+                            {s.value}
+                          </p>
+                          <p className="text-[13px] text-white/45">{s.label}</p>
+                        </div>
+                      </StaggerItem>
+                    ))}
+                  </Stagger>
+                ) : null}
               </div>
-            </AnimateIn>
-            {w.bobStats?.length ? (
-              <Stagger className="flex flex-wrap gap-x-12 gap-y-6 mt-10" stagger={0.08}>
-                {w.bobStats.map((s) => (
-                  <StaggerItem key={s.label ?? ""}>
-                    <div>
-                      <p
-                        className="text-[34px] font-bold bg-clip-text text-transparent leading-none mb-1.5"
-                        style={{ backgroundImage: "linear-gradient(90deg, #3f6bff, #8b5cf6)" }}
-                      >
-                        {s.value}
-                      </p>
-                      <p className="text-[13px] text-white/45">{s.label}</p>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </Stagger>
-            ) : null}
+            </div>
           </div>
         </Section>
       )}
