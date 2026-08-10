@@ -256,8 +256,12 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
               {w.whatYouDoHeadline ?? "What you will do"}
             </Heading>
             <div className="grid md:grid-cols-2 gap-10 md:gap-12 mt-10">
+              {/* The right column runs taller (more items, longer descriptions,
+                  plus its eyebrow label), so on desktop the steps distribute
+                  across the full row height rather than bunching at the top
+                  above a block of dead space. */}
               {w.whatYouDoItems?.length ? (
-                <Stagger className="space-y-5" stagger={0.07}>
+                <Stagger className="space-y-5 md:space-y-0 md:flex md:flex-col md:justify-between" stagger={0.07}>
                   {w.whatYouDoItems.map((item, i) => (
                     <StaggerItem key={item.title ?? i}>
                       <div className="flex items-start gap-3.5">
