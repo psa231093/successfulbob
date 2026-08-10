@@ -9,7 +9,8 @@ import TrackedCta from "@/components/TrackedCta";
 import VideoFacade from "@/components/VideoFacade";
 import WorkshopHero from "./WorkshopHero";
 import OverflowSection from "./OverflowSection";
-import { seatLineFor, youTubeIdFrom, type Workshop, type WorkshopView } from "@/lib/workshop";
+import { youTubeIdFrom, type Workshop, type WorkshopView } from "@/lib/workshop";
+import { useMobileReveal } from "@/lib/useMobileReveal";
 
 /* Section order and backgrounds.
 
@@ -25,20 +26,67 @@ import { seatLineFor, youTubeIdFrom, type Workshop, type WorkshopView } from "@/
 function Section({
   id,
   tone = "white",
+  density = "normal",
+  flushTop = false,
   children,
   className,
 }: {
   id?: string;
   tone?: "white" | "soft" | "dark" | "midnight";
+  density?: "normal" | "compact";
+  /* Drops the top padding for a section that directly follows another section
+     of the same tone, where two full paddings would read as one huge gap. */
+  flushTop?: boolean;
   children: React.ReactNode;
   className?: string;
 }) {
   const bg =
     tone === "soft" ? "bg-[#f5f7fb]" : tone === "dark" ? "bg-[#061126] text-white" : tone === "midnight" ? "bg-[#0B1734] text-white" : "bg-white";
+  const padding =
+    density === "compact"
+      ? flushTop
+        ? "pt-0 pb-14 md:pb-20"
+        : "py-14 md:py-20"
+      : flushTop
+        ? "pt-0 pb-20 md:pb-28"
+        : "py-20 md:py-28";
   return (
-    <section id={id} className={`py-20 md:py-28 ${bg} ${className ?? ""}`}>
+    <section id={id} className={`${padding} ${bg} ${className ?? ""}`}>
       {children}
     </section>
+  );
+}
+
+function ShowMoreToggle({
+  expanded,
+  remaining,
+  onClick,
+  dark,
+}: {
+  expanded: boolean;
+  remaining: number;
+  onClick: () => void;
+  dark?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`md:hidden mt-5 flex items-center gap-1.5 text-[13.5px] font-semibold ${
+        dark ? "text-[#9db4ff]" : "text-[#3f6bff]"
+      }`}
+    >
+      {expanded ? "Show less" : `Show ${remaining} more`}
+      <svg
+        className={`w-3.5 h-3.5 transition-transform ${expanded ? "rotate-180" : ""}`}
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
   );
 }
 
@@ -82,6 +130,12 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
   // Null for a missing or unparseable URL, which removes the section entirely.
   // "Works without the video" is a property of the structure, not a promise.
   const videoId = youTubeIdFrom(w.videoUrl);
+
+  // Long lists collapse to a couple of items on mobile with a "show more"
+  // toggle. Every item stays in the DOM (hidden via CSS, not omitted), so
+  // this never affects SEO or no-JS rendering.
+  const notForReveal = useMobileReveal(w.notFor?.length ?? 0, 2);
+  const agendaReveal = useMobileReveal(w.agenda?.length ?? 0, 2);
 
   return (
     <>
@@ -142,10 +196,13 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
       {/* -- Video (white). Conditional. White deliberately: it can end up next
              to the dark hero (previews hidden in closed/next-cohort) or next to
              the dark what-you-do section (problem empty), and only a light tone
-             keeps the no-adjacent-dark rule true in every combination. -- */}
+             keeps the no-adjacent-dark rule true in every combination.
+             When the previews section (also white) renders above it, the top
+             padding collapses so the two read as one continuous block instead
+             of being separated by two stacked section paddings. -- */}
       {videoId && (
-        <Section>
-          <div className="max-w-3xl mx-auto px-6">
+        <Section flushTop={Boolean(view.showPreviews && w.previews?.length)}>
+          <div className="max-w-4xl mx-auto px-6">
             <AnimateIn>
               <VideoFacade
                 videoId={videoId}
@@ -184,79 +241,85 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
         </Section>
       )}
 
-      {/* -- 4. What you will do (dark) -- */}
-      {w.whatYouDoItems?.length ? (
+      {/* -- 4. What you will do + what you leave with, merged (dark).
+             Previously two full sections of stacked cards; combined into one
+             two-column read (sequential steps left, checklist right) so the
+             "do this / get this" promise reads as one idea instead of two
+             back-to-back card grids. Uses only the existing whatYouDo* and
+             outcomes* fields -- outcomesHeadline becomes the right column's
+             sub-label rather than a second H2. -- */}
+      {w.whatYouDoItems?.length || w.outcomes?.length ? (
         <Section tone="midnight">
-          <div className="relative max-w-5xl mx-auto px-6">
+          <div className="relative max-w-4xl mx-auto px-6">
+            <Numeral n="02" />
             <Heading eyebrow={w.whatYouDoEyebrow} dark>
               {w.whatYouDoHeadline ?? "What you will do"}
             </Heading>
-            <Stagger className="grid md:grid-cols-2 gap-5 items-stretch mt-10" stagger={0.08}>
-              {w.whatYouDoItems.map((item, i) => (
-                <StaggerItem key={item.title ?? i} className="h-full">
-                  <div
-                    className="relative h-full rounded-2xl p-6"
-                    style={{ background: "rgba(6,17,38,0.55)", border: "1px solid rgba(255,255,255,0.08)" }}
-                  >
-                    <PointerGlow color="139,92,246" strength={0.12} />
-                    <div className="flex items-start gap-3.5">
-                      <span
-                        className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-lg text-[13px] font-bold text-white"
-                        style={{ background: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}
-                      >
-                        {i + 1}
-                      </span>
-                      <div>
-                        <h3 className="text-[16px] font-bold text-white mb-1.5 leading-snug">{item.title}</h3>
-                        {item.description && (
-                          <p className="text-[14.5px] text-white/60 leading-[1.7]">{item.description}</p>
-                        )}
+            <div className="grid md:grid-cols-2 gap-10 md:gap-12 mt-10">
+              {w.whatYouDoItems?.length ? (
+                <Stagger className="space-y-5" stagger={0.07}>
+                  {w.whatYouDoItems.map((item, i) => (
+                    <StaggerItem key={item.title ?? i}>
+                      <div className="flex items-start gap-3.5">
+                        <span
+                          className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-bold text-white"
+                          style={{ background: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}
+                        >
+                          {i + 1}
+                        </span>
+                        <div>
+                          <h3 className="text-[15px] font-bold text-white mb-1 leading-snug">{item.title}</h3>
+                          {item.description && (
+                            <p className="text-[14px] text-white/55 leading-[1.65]">{item.description}</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
+                    </StaggerItem>
+                  ))}
+                </Stagger>
+              ) : null}
+
+              {w.outcomes?.length ? (
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-[#9db4ff] mb-4">
+                    {w.outcomesHeadline ?? "What you will leave with"}
+                  </p>
+                  <Stagger className="space-y-4" stagger={0.07}>
+                    {w.outcomes.map((o, i) => (
+                      <StaggerItem key={o.title ?? i}>
+                        <div className="flex items-start gap-3">
+                          <span
+                            className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full mt-0.5"
+                            style={{ background: "rgba(255,255,255,0.08)" }}
+                          >
+                            <svg className="w-3.5 h-3.5 text-[#9db4ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </span>
+                          <div>
+                            <h3 className="text-[15px] font-bold text-white mb-1 leading-snug">{o.title}</h3>
+                            {o.description && (
+                              <p className="text-[14px] text-white/55 leading-[1.65]">{o.description}</p>
+                            )}
+                          </div>
+                        </div>
+                      </StaggerItem>
+                    ))}
+                  </Stagger>
+                </div>
+              ) : null}
+            </div>
           </div>
         </Section>
       ) : null}
 
-      {/* -- 5. What you leave with (white) -- */}
-      {w.outcomes?.length ? (
-        <Section>
-          <div className="relative max-w-4xl mx-auto px-6">
-            <Numeral n="02" />
-            <Heading eyebrow={w.outcomesEyebrow}>{w.outcomesHeadline ?? "What you will leave with"}</Heading>
-            <Stagger className="space-y-4 mt-10" stagger={0.07}>
-              {w.outcomes.map((o, i) => (
-                <StaggerItem key={o.title ?? i}>
-                  <div className="flex gap-4 p-5 rounded-xl border border-[#e5e7eb] bg-white">
-                    <span
-                      className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full mt-0.5"
-                      style={{ background: "rgba(63,107,255,0.10)" }}
-                    >
-                      <svg className="w-4 h-4 text-[#3f6bff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    <div>
-                      <h3 className="text-[16px] font-bold text-[#111827] mb-1 leading-snug">{o.title}</h3>
-                      {o.description && (
-                        <p className="text-[14.5px] text-[#526078] leading-[1.7]">{o.description}</p>
-                      )}
-                    </div>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-        </Section>
-      ) : null}
-
-      {/* -- 6. Who it is for (soft) -- */}
+      {/* -- 5. Who it is for (soft). Roles render as a horizontal strip with
+             hairline dividers rather than another card grid, so the page
+             isn't seven consecutive sections of the same bordered-card
+             recipe. -- */}
       {(w.audienceRoles?.length || w.audienceIntro) && (
         <Section tone="soft">
-          <div className="relative max-w-5xl mx-auto px-6">
+          <div className="relative max-w-4xl mx-auto px-6">
             <Numeral n="03" />
             <Heading eyebrow={w.audienceEyebrow}>{w.audienceHeadline ?? "Who it is for"}</Heading>
             {w.audienceIntro && (
@@ -267,13 +330,12 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
               </AnimateIn>
             )}
             {w.audienceRoles?.length ? (
-              <Stagger className="grid md:grid-cols-3 gap-5 items-stretch" stagger={0.09}>
-                {w.audienceRoles.map((r) => (
-                  <StaggerItem key={r.role ?? ""} className="h-full">
-                    <div className="relative h-full rounded-2xl p-6 bg-white border border-[#e5e7eb]">
-                      <PointerGlow />
-                      <h3 className="text-[16px] font-bold text-[#111827] mb-2">{r.role}</h3>
-                      <p className="text-[14.5px] text-[#526078] leading-[1.7]">{r.reason}</p>
+              <Stagger className="grid sm:grid-cols-3 gap-8 sm:gap-6" stagger={0.09}>
+                {w.audienceRoles.map((r, i) => (
+                  <StaggerItem key={r.role ?? ""}>
+                    <div className={i > 0 ? "sm:pl-6 sm:border-l sm:border-[#e5e7eb]" : ""}>
+                      <h3 className="text-[15px] font-bold text-[#111827] mb-2">{r.role}</h3>
+                      <p className="text-[14px] text-[#526078] leading-[1.7]">{r.reason}</p>
                     </div>
                   </StaggerItem>
                 ))}
@@ -283,14 +345,14 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
         </Section>
       )}
 
-      {/* -- 7. Who it is not for (white) -- */}
+      {/* -- 6. Who it is not for (white) -- */}
       {w.notFor?.length ? (
-        <Section>
+        <Section density="compact">
           <div className="max-w-3xl mx-auto px-6">
             <Heading>{w.notForHeadline ?? "Who it is not for"}</Heading>
             <Stagger className="space-y-3 mt-8" stagger={0.06}>
-              {w.notFor.map((n) => (
-                <StaggerItem key={n}>
+              {w.notFor.map((n, i) => (
+                <StaggerItem key={n} className={notForReveal.isMobileHidden(i) ? "hidden md:block" : ""}>
                   <div className="flex gap-3.5 items-start">
                     <span
                       className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full mt-0.5"
@@ -305,14 +367,21 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
                 </StaggerItem>
               ))}
             </Stagger>
+            {notForReveal.hasMore && (
+              <ShowMoreToggle
+                expanded={notForReveal.expanded}
+                remaining={notForReveal.remaining}
+                onClick={notForReveal.toggle}
+              />
+            )}
           </div>
         </Section>
       ) : null}
 
-      {/* -- 8. Format and agenda (dark) -- */}
+      {/* -- 7. Format and agenda (dark) -- */}
       {(w.agenda?.length || w.formatSummary) && (
         <Section tone="midnight">
-          <div className="max-w-4xl mx-auto px-6">
+          <div className="max-w-3xl mx-auto px-6">
             <Heading eyebrow={w.formatEyebrow} dark>
               {w.formatHeadline ?? "Format"}
             </Heading>
@@ -331,62 +400,81 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
 
             {w.agenda?.length ? (
               <Stagger className="space-y-0" stagger={0.08}>
-                {w.agenda.map((a, i) => (
-                  <StaggerItem key={a.title ?? i}>
-                    <div className="relative flex gap-5 pb-8 last:pb-0">
-                      <div className="flex flex-col items-center flex-shrink-0">
-                        <span
-                          className="w-3 h-3 rounded-full mt-1.5"
-                          style={{ background: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}
-                        />
-                        {i < (w.agenda?.length ?? 0) - 1 && (
-                          <span className="w-px flex-1 mt-2" style={{ background: "rgba(255,255,255,0.12)" }} />
-                        )}
+                {w.agenda.map((a, i) => {
+                  const hiddenOnMobile = agendaReveal.isMobileHidden(i);
+                  // The connector line trails from this item toward the next.
+                  // If this item is visible but the next one is collapsed,
+                  // the line has nothing to point to on mobile -- hide just
+                  // that segment rather than leaving it dangling.
+                  const lineHiddenOnMobile = !hiddenOnMobile && agendaReveal.isMobileHidden(i + 1);
+                  return (
+                    <StaggerItem key={a.title ?? i} className={hiddenOnMobile ? "hidden md:block" : ""}>
+                      <div className="relative flex gap-5 pb-8 last:pb-0">
+                        <div className="flex flex-col items-center flex-shrink-0">
+                          <span
+                            className="w-3 h-3 rounded-full mt-1.5"
+                            style={{ background: "linear-gradient(135deg, #3f6bff, #8b5cf6)" }}
+                          />
+                          {i < (w.agenda?.length ?? 0) - 1 && (
+                            <span
+                              className={`w-px flex-1 mt-2 ${lineHiddenOnMobile ? "hidden md:block" : ""}`}
+                              style={{ background: "rgba(255,255,255,0.12)" }}
+                            />
+                          )}
+                        </div>
+                        <div className="pb-2">
+                          {a.time && (
+                            <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-[#9db4ff] mb-1.5">
+                              {a.time}
+                            </p>
+                          )}
+                          <h3 className="text-[16.5px] font-bold text-white mb-1.5 leading-snug">{a.title}</h3>
+                          {a.description && (
+                            <p className="text-[14.5px] text-white/60 leading-[1.7] max-w-xl">{a.description}</p>
+                          )}
+                        </div>
                       </div>
-                      <div className="pb-2">
-                        {a.time && (
-                          <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-[#9db4ff] mb-1.5">
-                            {a.time}
-                          </p>
-                        )}
-                        <h3 className="text-[16.5px] font-bold text-white mb-1.5 leading-snug">{a.title}</h3>
-                        {a.description && (
-                          <p className="text-[14.5px] text-white/60 leading-[1.7] max-w-xl">{a.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  </StaggerItem>
-                ))}
+                    </StaggerItem>
+                  );
+                })}
               </Stagger>
             ) : null}
+            {agendaReveal.hasMore && (
+              <ShowMoreToggle
+                expanded={agendaReveal.expanded}
+                remaining={agendaReveal.remaining}
+                onClick={agendaReveal.toggle}
+                dark
+              />
+            )}
           </div>
         </Section>
       )}
 
-      {/* -- 9. Pre-work and follow-up (white) -- */}
+      {/* -- 8. Pre-work and follow-up (white). Left-border accent instead of
+             full bordered cards -- a lighter, distinct treatment from the
+             card-grid sections elsewhere on the page. -- */}
       {(w.preWorkBody || w.followUpBody) && (
-        <Section>
+        <Section density="compact">
           <div className="max-w-4xl mx-auto px-6">
-            <Stagger className="grid md:grid-cols-2 gap-6 items-stretch" stagger={0.09}>
+            <Stagger className="grid md:grid-cols-2 gap-8 md:gap-10" stagger={0.09}>
               {w.preWorkBody && (
-                <StaggerItem className="h-full">
-                  <div className="relative h-full rounded-2xl p-7 bg-[#f5f7fb] border border-[#e5e7eb]">
-                    <PointerGlow />
-                    <h3 className="text-[18px] font-bold text-[#111827] mb-3">
+                <StaggerItem>
+                  <div className="border-l-[3px] border-[#3f6bff] pl-5">
+                    <h3 className="text-[16px] font-bold text-[#111827] mb-2">
                       {w.preWorkHeadline ?? "Pre-work"}
                     </h3>
-                    <p className="text-[15px] text-[#526078] leading-[1.8]">{w.preWorkBody}</p>
+                    <p className="text-[14.5px] text-[#526078] leading-[1.75]">{w.preWorkBody}</p>
                   </div>
                 </StaggerItem>
               )}
               {w.followUpBody && (
-                <StaggerItem className="h-full">
-                  <div className="relative h-full rounded-2xl p-7 bg-[#f5f7fb] border border-[#e5e7eb]">
-                    <PointerGlow />
-                    <h3 className="text-[18px] font-bold text-[#111827] mb-3">
+                <StaggerItem>
+                  <div className="border-l-[3px] border-[#8b5cf6] pl-5">
+                    <h3 className="text-[16px] font-bold text-[#111827] mb-2">
                       {w.followUpHeadline ?? "Follow-up"}
                     </h3>
-                    <p className="text-[15px] text-[#526078] leading-[1.8]">{w.followUpBody}</p>
+                    <p className="text-[14.5px] text-[#526078] leading-[1.75]">{w.followUpBody}</p>
                   </div>
                 </StaggerItem>
               )}
@@ -395,7 +483,7 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
         </Section>
       )}
 
-      {/* -- 10. Pricing and seat rules (soft) -- */}
+      {/* -- 9. Pricing and seat rules (soft) -- */}
       {(w.seatRules?.length || w.refundPolicy) && (
         <Section tone="soft">
           <div className="relative max-w-4xl mx-auto px-6">
@@ -419,22 +507,13 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
                       </span>
                       <span className="text-[15px] text-white/45">per seat</span>
                     </div>
-                    <p className="text-[14px] text-white/60 leading-[1.7] mb-6">
+                    <p className="text-[14px] text-white/60 leading-[1.7]">
                       {[w.primarySession.dateDisplay, w.primarySession.timeDisplay].filter(Boolean).join(" · ")}
                     </p>
-                    {/* This card describes the MAIN session, so when that
-                        session is full it must not carry the button — in the
-                        sold-out state view.primaryCta sells the second session
-                        at a different price, and a reserve button under this
-                        card's price would sell one thing while labelled with
-                        another. The second-session block below has its own. */}
-                    {view.state === "sold-out" ? (
-                      <p className="text-[14px] font-semibold text-white/50">
-                        {seatLineFor(w.primarySession) ?? "This session is full"}
-                      </p>
-                    ) : (
-                      <TrackedCta cta={view.primaryCta} fitCallIcon={view.primaryCta.kind === "fit-call"} />
-                    )}
+                    {/* Informational only -- deliberately no button here.
+                        The page already offers two reserve CTAs (hero and
+                        the final block); repeating a third here just for
+                        this card was redundant with both. */}
                   </div>
                 </AnimateIn>
               )}
@@ -471,7 +550,7 @@ export default function WorkshopsPage({ workshop, view }: { workshop: Workshop; 
 
       {/* -- 11. Assessment credit (white) -- */}
       {w.assessmentCreditBody && (
-        <Section>
+        <Section density="compact">
           <div className="max-w-3xl mx-auto px-6">
             <div className="relative rounded-2xl p-8 md:p-10 bg-[#f5f7fb] border border-[#e5e7eb]">
               <PointerGlow />
